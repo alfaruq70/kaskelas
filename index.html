@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#13795b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="KasKelas">
 <title>KasKelas — Bendahara Kelas</title>
 <style>
 :root{--bg:#f4f7f6;--surface:#fff;--text:#172b27;--muted:#73827e;--line:#e4ece8;--green:#13795b;--green2:#0d6047;--mint:#e7f5ef;--orange:#fff1dc;--red:#fdebea;--shadow:0 10px 28px rgba(24,63,49,.06);--radius:18px}
@@ -18,13 +25,17 @@
 @keyframes remIn{from{transform:translateX(-140%)}to{transform:translateX(0)}}@keyframes remOut{from{transform:translateX(0)}to{transform:translateX(-140%)}}@keyframes remFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,-9px)}}
 .rem-head{display:flex;gap:10px;align-items:flex-start}.rem-bell{font-size:22px;line-height:1}.rem-head>div{flex:1;min-width:0}.rem-head strong{display:block;font-size:13px}.rem-head small{font-size:11px;color:#b53c35;font-weight:700}.rem-x{border:0;background:#f3f6f4;border-radius:8px;width:26px;height:26px;cursor:pointer;font-size:16px;line-height:1;color:#52645d}.rem-sum{margin:10px 0 6px;font-size:12px;font-weight:800;background:#fdebea;color:#b53c35;border-radius:9px;padding:7px 10px}.rem-float ul{list-style:none;margin:0;padding:0}.rem-float li{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:6px 2px;border-bottom:1px dashed #edf1ef}.rem-float li:last-child{border:0}.rem-float li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rem-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:10px;color:var(--muted)}.rem-foot button{border:0;background:none;color:var(--green);font-weight:800;font-size:11px;cursor:pointer;font-family:inherit;padding:0}
 @media(max-width:1050px){.rem-float{left:240px}}@media(max-width:720px){.rem-float{left:12px;bottom:14px}}@media(prefers-reduced-motion:reduce){.rem-float.float{animation:none}}@media print{.rem-float{display:none!important}}
-#payPage{display:none;max-width:560px;margin:0 auto;padding:20px 14px 40px}body.member .app,body.member .rem-float{display:none!important}body.member #payPage{display:block}
+#payPage{max-width:560px;margin:0 auto}
 .pp-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}.pp-card h3{margin:0 0 6px;font-size:16px}.pp-qris{display:block;width:min(260px,100%);margin:12px auto;border-radius:12px}
 .acc{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}.acc small{display:block;color:var(--muted);margin-top:2px}.pp-thumb{width:44px;height:44px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid var(--line)}
 #loginPage{display:none;min-height:100vh;place-items:center;padding:20px}body.guest #loginPage{display:grid}body.guest .app,body.guest #payPage,body.guest .rem-float{display:none!important}
 .lg{width:min(400px,100%);background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}.lg h2{margin:0 0 4px;font-size:22px}.lg h3{margin:14px 0 4px;font-size:16px}.lg .field{margin-bottom:12px}.tabs{display:flex;gap:6px;margin:16px 0}.tabs button{flex:1}.tabs button.on{background:var(--green);color:#fff}.lg-err{color:#b53c35;font-size:13px;min-height:18px;margin-bottom:6px}
 #splash{display:none;min-height:100vh;place-items:center;color:var(--muted);font-weight:700;font-size:15px}body.loading #splash{display:grid}body.loading .app,body.loading #loginPage,body.loading #payPage,body.loading .rem-float{display:none!important}
 .lg button.primary[type=submit]{width:100%;margin-top:6px}#syncPill{cursor:default;white-space:nowrap}#syncPill.ok{color:var(--green)}#syncPill.pending{color:var(--muted)}#syncPill.err{background:var(--red);color:#b53c35;border-color:#f1c9c5;cursor:pointer}
+
+.nav button.member-only{display:none}body.member .nav button.member-only{display:flex}
+body.member .nav button.admin-only,body.member #quickAdd,body.member #welcomeAdd,body.member #addMember,body.member #csvTpl,body.member #csvBtn,body.member #addPayment,body.member #addTransaction,body.member #addAnnouncement,body.member [data-cal-add],body.member .row-actions,body.member #syncPill{display:none!important}
+body.member #section-members table th:last-child,body.member #section-members table td:last-child:not(.empty),body.member #section-payments table th:last-child,body.member #section-payments table td:last-child:not(.empty),body.member #section-transactions table th:last-child,body.member #section-transactions table td:last-child:not(.empty){display:none}
 </style>
 </head>
 <body class="loading">
@@ -36,18 +47,19 @@
     <button class="active" data-section="dashboard"><span>◫</span>Dashboard</button>
     <button data-section="members"><span>♙</span>Data Anggota</button>
     <button data-section="payments"><span>▤</span>Pembayaran Kas</button>
-    <button data-section="verify"><span>✔</span>Konfirmasi Bayar<b id="vBadge" class="status unpaid" style="margin-left:auto;display:none"></b></button>
+    <button class="admin-only" data-section="verify"><span>✔</span>Konfirmasi Bayar<b id="vBadge" class="status unpaid" style="margin-left:auto;display:none"></b></button>
     <button data-section="transactions"><span>⇄</span>Transaksi Kas</button>
     <button data-section="reports"><span>▧</span>Laporan Keuangan</button>
     <button data-section="calendar"><span>🗓</span>Kalender</button>
     <button data-section="announcements"><span>📢</span>Pengumuman</button>
-    <button data-section="settings"><span>⚙</span>Pengaturan Iuran</button>
-    <button data-section="accounts"><span>🔐</span>Kelola Akun</button>
+    <button class="member-only" data-section="mypay"><span>💳</span>Bayar Kas</button>
+    <button class="admin-only" data-section="settings"><span>⚙</span>Pengaturan Iuran</button>
+    <button class="admin-only" data-section="accounts"><span>🔐</span>Kelola Akun</button>
   </nav></div>
   <div><div class="nav-label">PREFERENSI</div><nav class="nav">
-    <button id="backupBtn"><span>⇩</span>Ekspor Data JSON</button>
-    <button id="importBtn"><span>⇧</span>Impor Data JSON</button>
-    <button id="resetBtn"><span>↻</span>Reset Data</button>
+    <button class="admin-only" id="backupBtn"><span>⇩</span>Ekspor Data JSON</button>
+    <button class="admin-only" id="importBtn"><span>⇧</span>Impor Data JSON</button>
+    <button class="admin-only" id="resetBtn"><span>↻</span>Reset Data</button>
     <button id="logoutBtn"><span>⎋</span>Keluar</button>
   </nav></div>
   <div class="side-bottom"><strong>☁ Tersimpan di cloud</strong>Data tersinkron lewat Supabase dan bisa dibuka dari perangkat mana pun. Ekspor cadangan sesekali sebagai arsip.<div id="whoami" style="margin-top:8px;opacity:.8;word-break:break-all"></div></div>
@@ -57,6 +69,7 @@
 
   <section class="section active" id="section-dashboard">
     <div class="welcome"><div><div class="eyebrow" style="color:#bce8d5" id="welcomeHi">HALO, BENDAHARA! 👋</div><h3 id="welcomeTitle">Keuangan kelas rapi, transparan, dan terkendali.</h3><p id="welcomeSub">Pantau kas, catat pembayaran anggota, dan buat laporan dalam satu tempat.</p></div><button class="primary" id="welcomeAdd">＋ Catat transaksi</button></div>
+    <div class="panel" id="myStatus" style="margin-bottom:20px;display:none"></div>
     <div class="panel" id="dashAnnouncements" style="margin-bottom:20px;display:none"></div>
     <div class="stats">
       <div class="stat"><div class="stat-top">Saldo Kas Saat Ini <div class="stat-icon">💰</div></div><strong id="statBalance">Rp0</strong><small class="positive">Saldo pemasukan dikurangi pengeluaran</small></div>
@@ -118,16 +131,17 @@
   </section>
   <section class="section" id="section-accounts">
   <div class="panel"><div class="panel-head"><div><h3>Akun Admin</h3><p>Admin masuk dengan email. Buat akunnya dulu di Supabase (Authentication → Users → Add user), lalu beri akses di sini.</p></div><button class="primary" id="addAdmin">＋ Tambah Admin</button></div><div class="table-wrap"><table><thead><tr><th>Email admin</th><th>Aksi</th></tr></thead><tbody id="admBody"></tbody></table></div></div>
-  <div class="panel" style="margin-top:18px"><div class="panel-head"><div><h3>Akses Anggota</h3><p>Anggota masuk dengan NIM dan PIN dari bendahara. Mereka hanya melihat status kas sendiri dan mengirim bukti bayar.</p></div><button class="secondary" id="pinAll">🔑 Buat PIN semua yang belum punya</button></div><div class="table-wrap"><table><thead><tr><th>Anggota</th><th>NIM</th><th>PIN</th><th>Aksi</th></tr></thead><tbody id="pinBody"></tbody></table></div></div>
-  <div class="panel" style="margin-top:18px"><h3>Panduan mengelola website</h3><ol class="note" style="line-height:1.9;padding-left:20px"><li>Data tersimpan di cloud Supabase, jadi semua admin melihat data yang sama di perangkat mana pun.</li><li>Admin baru: buat akunnya di Supabase (Authentication → Users → Add user), lalu klik Tambah Admin dan isi emailnya. Sebaiknya punya satu admin cadangan, misalnya wakil bendahara.</li><li>Anggota baru: isi NIM di Data Anggota, buka Kelola Akun, klik Buat PIN, lalu kirim lewat WA.</li><li>Tiap ada kiriman bukti: menu Konfirmasi Bayar, cek bukti, lalu Terima atau Tolak.</li><li>Bayar tunai: Pembayaran Kas, Catat Pembayaran. Pengeluaran: Transaksi Kas, lalu ＋ Nota.</li><li>Akhir bulan: cetak Laporan, lalu Ekspor Data JSON sebagai arsip tambahan.</li><li>Anggota lupa PIN: Reset PIN. Admin lupa password: reset lewat dashboard Supabase.</li><li>Klik Keluar bila memakai perangkat bersama.</li></ol></div>
+  <div class="panel" style="margin-top:18px"><div class="panel-head"><div><h3>Akses Anggota</h3><p>Anggota masuk dengan NIM sebagai ID dan password. Tidak perlu membuat PIN; cukup pastikan kolom NIM di Data Anggota terisi.</p></div></div></div>
+  <div class="panel" style="display:none"><div class="panel-head"><div><h3>PIN (tidak dipakai)</h3><p>Anggota masuk dengan NIM dan PIN dari bendahara. Mereka hanya melihat status kas sendiri dan mengirim bukti bayar.</p></div><button class="secondary" id="pinAll">🔑 Buat PIN semua yang belum punya</button></div><div class="table-wrap"><table><thead><tr><th>Anggota</th><th>NIM</th><th>PIN</th><th>Aksi</th></tr></thead><tbody id="pinBody"></tbody></table></div></div>
+  <div class="panel" style="margin-top:18px"><h3>Panduan mengelola website</h3><ol class="note" style="line-height:1.9;padding-left:20px"><li>Data tersimpan di cloud Supabase, jadi semua admin melihat data yang sama di perangkat mana pun.</li><li>Admin baru: buat akunnya di Supabase (Authentication → Users → Add user), lalu klik Tambah Admin dan isi emailnya. Sebaiknya punya satu admin cadangan, misalnya wakil bendahara.</li><li>Anggota baru: cukup isi NIM di Data Anggota. Anggota masuk dengan NIM sebagai ID dan password.</li><li>Tiap ada kiriman bukti: menu Konfirmasi Bayar, cek bukti, lalu Terima atau Tolak.</li><li>Bayar tunai: Pembayaran Kas, Catat Pembayaran. Pengeluaran: Transaksi Kas, lalu ＋ Nota.</li><li>Akhir bulan: cetak Laporan, lalu Ekspor Data JSON sebagai arsip tambahan.</li><li>Admin lupa password: reset lewat dashboard Supabase.</li><li>Klik Keluar bila memakai perangkat bersama.</li></ol></div>
   </section>
+  <section class="section" id="section-mypay"><div id="payPage"></div></section>
   <div class="footer-note">KasKelas • Administrasi kas kelas yang sederhana dan transparan</div>
 </main>
 </div>
 
 <input type="file" id="csvFile" accept=".csv,text/csv,text/plain" hidden>
 <div id="loginPage"></div>
-<div id="payPage"></div>
 <div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Form</h3><button class="close" id="modalClose">×</button></div><form id="modalForm"><div id="modalFields" class="form-grid"></div><div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Batal</button><button type="submit" class="primary" id="saveModal">Simpan</button></div></form></div></div>
 <div class="toast" id="toast"></div><input type="file" id="importFile" accept=".json,application/json" hidden>
 <div class="rem-float" id="reminderFloat" hidden></div>
@@ -170,7 +184,14 @@ function balance(){return sumTransactions('income')-sumTransactions('expense')}
 function activeMembers(){return data.members.filter(m=>m.status!=='inactive')}
 function paidFor(memberId,month){return data.payments.filter(p=>p.memberId===memberId&&p.month===month).reduce((s,p)=>s+Number(p.amount||0),0)}
 function ensureMonths(){['paymentMonth','transactionMonth','reportMonth'].forEach(id=>{const el=$('#'+id);if(!el)return;const selected=el.value||currentMonth;const months=new Set([currentMonth,...data.transactions.map(t=>t.date?.slice(0,7)),...data.payments.map(p=>p.month)].filter(Boolean));for(let i=-3;i<12;i++){const d=new Date(now.getFullYear(),now.getMonth()-i,1);months.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`)}const sorted=[...months].sort().reverse();el.innerHTML=sorted.map(m=>`<option value="${m}">${esc(monthLabel(m))}</option>`).join('');el.value=sorted.includes(selected)?selected:currentMonth})}
+function renderMyStatus(){
+ const ms=$('#myStatus');if(!ms)return;
+ if(!memberInfo){ms.style.display='none';ms.innerHTML='';return}
+ const m=data.members.find(x=>x.id===memberInfo.member.id)||memberInfo.member,due=Number(m.fee||0),paid=paidFor(m.id,currentMonth),left=Math.max(0,due-paid),pend=data.pending.some(p=>p.memberId===m.id&&p.month===currentMonth);
+ ms.style.display='block';
+ ms.innerHTML=`<div class="panel-head"><div><h3>Status kas kamu · ${esc(monthLabel(currentMonth))}</h3><p>Tagihan ${money(due)} · jatuh tempo tanggal ${S().due} (${dueLabel()})</p></div><span class="status ${left?(pend?'partial':'unpaid'):'paid'}">${left?(pend?'MENUNGGU KONFIRMASI':'BELUM LUNAS · sisa '+money(left)):'LUNAS'}</span></div>${left&&!pend?'<button class="primary" data-go="mypay">Bayar sekarang →</button>':''}`}
 function renderDashboard(){
+ renderMyStatus();
  $('#statBalance').textContent=money(balance());$('#statIncome').textContent=money(sumTransactions('income'));$('#statExpense').textContent=money(sumTransactions('expense'));$('#statMembers').textContent=activeMembers().length;
  const members=activeMembers(),paid=members.filter(m=>paidFor(m.id,currentMonth)>=Number(m.fee||0)&&Number(m.fee||0)>0).length;
  $('#statPaid').textContent=`${paid} dari ${members.length} anggota lunas bulan ini`;
@@ -185,9 +206,9 @@ function renderDashboard(){
 function renderMembers(){const q=$('#memberSearch').value.toLowerCase(),f=$('#memberFilter').value;const rows=data.members.filter(m=>(`${m.name} ${m.nim} ${m.contact}`.toLowerCase().includes(q))&&(f==='all'||(m.status||'active')===f));$('#membersBody').innerHTML=rows.length?rows.map((m,i)=>`<tr><td>${i+1}</td><td><strong>${esc(m.name)}</strong></td><td>${esc(m.nim||'—')}</td><td>${esc(m.contact||'—')}</td><td>${money(m.fee)}</td><td><span class="status ${(m.status||'active')==='active'?'paid':'unpaid'}">${(m.status||'active')==='active'?'Aktif':'Tidak aktif'}</span></td><td><div class="row-actions"><button class="icon-btn" data-edit-member="${m.id}">Edit</button><button class="icon-btn" data-delete-member="${m.id}">Hapus</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Belum ada anggota. Tambahkan data anggota kelas.</td></tr>'}
 function renderPayments(){const month=$('#paymentMonth').value||currentMonth,q=$('#paymentSearch').value.toLowerCase(),filter=$('#paymentStatus').value;const rows=activeMembers().filter(m=>m.name.toLowerCase().includes(q)).map(m=>{const due=Number(m.fee||0),paid=paidFor(m.id,month),status=paid>=due&&due>0?'LUNAS':paid>0?'SEBAGIAN':'BELUM';return {m,due,paid,left:Math.max(0,due-paid),status}}).filter(r=>filter==='all'||r.status===filter);$('#paymentsBody').innerHTML=rows.length?rows.map(r=>`<tr><td><strong>${esc(r.m.name)}</strong></td><td>${esc(monthLabel(month))}</td><td>${money(r.due)}</td><td class="positive">${money(r.paid)}</td><td class="${r.left?'negative':'positive'}">${money(r.left)}</td><td><span class="status ${r.status==='LUNAS'?'paid':r.status==='SEBAGIAN'?'partial':'unpaid'}">${r.status==='BELUM'?'BELUM BAYAR':r.status}${r.left&&now>dueDate(month)?' · TELAT':''}</span></td><td><div class="row-actions"><button class="icon-btn" data-pay="${r.m.id}" data-month="${month}">＋ Bayar</button>${r.paid?`<button class="icon-btn" data-rc="${r.m.id}" data-month="${month}">🧾 Kwitansi</button>`:''}${r.left?`<button class="icon-btn" data-wa="${r.m.id}" data-month="${month}">💬 WA</button>`:''}</div></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Tidak ada data pembayaran untuk filter ini.</td></tr>'}
 function renderTransactions(){const q=$('#transactionSearch').value.toLowerCase(),type=$('#transactionType').value,month=$('#transactionMonth').value;const rows=[...data.transactions].filter(t=>(`${t.description} ${t.category}`.toLowerCase().includes(q))&&(type==='all'||t.type===type)&&(!month||t.date?.startsWith(month))).sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#transactionsBody').innerHTML=rows.length?rows.map(t=>`<tr><td>${dateStr(t.date)}</td><td><strong>${esc(t.description)}</strong></td><td>${esc(t.category||'Umum')}</td><td><span class="status ${t.type==='income'?'paid':'partial'}">${t.type==='income'?'Pemasukan':'Pengeluaran'}</span></td><td class="${t.type==='income'?'positive':'negative'}"><strong>${t.type==='income'?'+':'−'}${money(t.amount)}</strong></td><td><div class="row-actions">${t.type==='expense'?`<button class="icon-btn" data-nota="${t.id}">${t.receipt?'📎 Nota':'＋ Nota'}</button>`:''}<button class="icon-btn" data-edit-transaction="${t.id}">Edit</button><button class="icon-btn" data-delete-transaction="${t.id}">Hapus</button></div></td></tr>`).join(''):'<tr><td colspan="6" class="empty">Belum ada transaksi pada periode ini.</td></tr>'}
-function renderReport(){const m=$('#reportMonth').value||currentMonth,inc=sumTransactions('income',m),out=sumTransactions('expense',m),paid=data.payments.filter(p=>p.month===m).reduce((s,p)=>s+Number(p.amount||0),0),items=data.transactions.filter(t=>t.date?.startsWith(m)).sort((a,b)=>a.date.localeCompare(b.date)),opening=data.transactions.filter(t=>t.date&&t.date<m+'-01').reduce((s,t)=>s+(t.type==='income'?1:-1)*Number(t.amount||0),0);$('#reportContent').innerHTML=`<div class="report-box"><div style="text-align:center;padding:8px 0 18px"><div class="eyebrow">LAPORAN RESMI KAS ${esc(S().org||'KELAS').toUpperCase()}</div><h2 style="margin:8px 0;font-size:22px">${esc(monthLabel(m))}</h2><div class="note">Dibuat pada ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</div></div><div class="report-line"><span>Saldo awal periode*</span><strong>${money(opening)}</strong></div><div class="report-line"><span>Total pemasukan</span><strong class="positive">${money(inc)}</strong></div><div class="report-line"><span>Di antaranya pembayaran kas</span><strong>${money(paid)}</strong></div><div class="report-line"><span>Total pengeluaran</span><strong class="negative">${money(out)}</strong></div><div class="report-line"><span>Surplus / defisit periode</span><strong class="${inc-out>=0?'positive':'negative'}">${money(inc-out)}</strong></div><div class="report-line"><span>Saldo akhir periode</span><strong>${money(opening+inc-out)}</strong></div><p class="note">*Saldo awal dihitung dari seluruh transaksi sebelum periode yang dipilih. Pembayaran kas tercatat sebagai pemasukan saat pembayaran dimasukkan.</p></div><div class="panel-head" style="margin-top:24px"><div><h3>Rincian Transaksi Periode</h3><p>${items.length} transaksi tercatat</p></div></div><div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Jenis</th><th>Nominal</th></tr></thead><tbody>${items.length?items.map(t=>`<tr><td>${dateStr(t.date)}</td><td>${esc(t.description)}${t.receipt?' 📎':''}</td><td>${esc(t.category||'Umum')}</td><td>${t.type==='income'?'Pemasukan':'Pengeluaran'}</td><td>${t.type==='income'?'+':'−'}${money(t.amount)}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">Belum ada transaksi pada periode ini.</td></tr>'}</tbody></table></div>`}
+function renderReport(){const m=$('#reportMonth').value||currentMonth,inc=sumTransactions('income',m),out=sumTransactions('expense',m),paid=data.payments.filter(p=>p.month===m).reduce((s,p)=>s+Number(p.amount||0),0),items=data.transactions.filter(t=>t.date?.startsWith(m)).sort((a,b)=>a.date.localeCompare(b.date)),opening=data.transactions.filter(t=>t.date&&t.date<m+'-01').reduce((s,t)=>s+(t.type==='income'?1:-1)*Number(t.amount||0),0);$('#reportContent').innerHTML=`<div class="report-box"><div style="text-align:center;padding:8px 0 18px"><div class="eyebrow">LAPORAN RESMI KAS ${esc(S().org||'KELAS').toUpperCase()}</div><h2 style="margin:8px 0;font-size:22px">${esc(monthLabel(m))}</h2><div class="note">Dibuat pada ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</div></div><div class="report-line"><span>Saldo awal periode*</span><strong>${money(opening)}</strong></div><div class="report-line"><span>Total pemasukan</span><strong class="positive">${money(inc)}</strong></div><div class="report-line"><span>Di antaranya pembayaran kas</span><strong>${money(paid)}</strong></div><div class="report-line"><span>Total pengeluaran</span><strong class="negative">${money(out)}</strong></div><div class="report-line"><span>Surplus / defisit periode</span><strong class="${inc-out>=0?'positive':'negative'}">${money(inc-out)}</strong></div><div class="report-line"><span>Saldo akhir periode</span><strong>${money(opening+inc-out)}</strong></div><p class="note">*Saldo awal dihitung dari seluruh transaksi sebelum periode yang dipilih. Pembayaran kas tercatat sebagai pemasukan saat pembayaran dimasukkan.</p></div><div class="panel-head" style="margin-top:24px"><div><h3>Rincian Transaksi Periode</h3><p>${items.length} transaksi tercatat</p></div></div><div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Jenis</th><th>Nominal</th></tr></thead><tbody>${items.length?items.map(t=>`<tr><td>${dateStr(t.date)}</td><td>${esc(t.description)}${(t.receipt||t.hasReceipt)?' 📎':''}</td><td>${esc(t.category||'Umum')}</td><td>${t.type==='income'?'Pemasukan':'Pengeluaran'}</td><td>${t.type==='income'?'+':'−'}${money(t.amount)}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">Belum ada transaksi pada periode ini.</td></tr>'}</tbody></table></div>`}
 function renderAll(){ensureMonths();renderDashboard();renderMembers();renderPayments();renderTransactions();renderReport();renderSettings();renderAnnouncements();renderBrand();renderCalendar();renderPay();portal();renderAccounts()}
-function navigate(name){$$('.section').forEach(s=>s.classList.toggle('active',s.id==='section-'+name));$$('.nav button[data-section]').forEach(b=>b.classList.toggle('active',b.dataset.section===name));const titles={dashboard:'Dashboard',members:'Data Anggota',payments:'Pembayaran Kas',transactions:'Transaksi Kas',reports:'Laporan Keuangan',calendar:'Kalender',announcements:'Pengumuman',verify:'Konfirmasi Bayar',accounts:'Kelola Akun',settings:'Pengaturan Iuran'};$('#pageTitle').textContent=titles[name]||'Dashboard';$('#sidebar').classList.remove('open');if(name==='reports')renderReport();window.scrollTo({top:0,behavior:'smooth'})}
+function navigate(name){$$('.section').forEach(s=>s.classList.toggle('active',s.id==='section-'+name));$$('.nav button[data-section]').forEach(b=>b.classList.toggle('active',b.dataset.section===name));const titles={dashboard:'Dashboard',members:'Data Anggota',payments:'Pembayaran Kas',transactions:'Transaksi Kas',reports:'Laporan Keuangan',calendar:'Kalender',announcements:'Pengumuman',verify:'Konfirmasi Bayar',accounts:'Kelola Akun',settings:'Pengaturan Iuran',mypay:'Bayar Kas'};$('#pageTitle').textContent=titles[name]||'Dashboard';$('#sidebar').classList.remove('open');if(name==='reports')renderReport();window.scrollTo({top:0,behavior:'smooth'})}
 function field(name,label,type='text',value='',opts={}){let html='';if(type==='select')html=`<select name="${name}" ${opts.required?'required':''}>${opts.options.map(o=>`<option value="${esc(o.value)}" ${String(value)===String(o.value)?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;else if(type==='textarea')html=`<textarea name="${name}" rows="3" ${opts.required?'required':''}>${esc(value)}</textarea>`;else html=`<input name="${name}" type="${type}" value="${esc(value)}" ${opts.required?'required':''} ${opts.min!==undefined?`min="${opts.min}"`:''} ${opts.step?`step="${opts.step}"`:''} placeholder="${esc(opts.placeholder||'')}">`;return `<div class="field ${opts.full?'full':''}"><label>${label}${opts.required?' *':''}</label>${html}</div>`}
 function openModal(title,fields,action,submit='Simpan'){modalAction=action;$('#modalTitle').textContent=title;$('#modalFields').innerHTML=fields;$('#saveModal').textContent=submit;$('#modalBackdrop').classList.add('show')}
 function closeModal(){$('#modalBackdrop').classList.remove('show');modalAction=null}
@@ -224,7 +245,7 @@ $('#resetBtn').onclick=()=>{if(confirm('Yakin menghapus SEMUA data kas di cloud 
 const S=()=>data.settings;
 function perMonth(f=S().fee,p=S().period){return Number(f)*(p==='weekly'?4:1)}
 function dueDate(month){const [y,m]=month.split('-').map(Number),last=new Date(y,m,0).getDate();return new Date(y,m-1,Math.min(Number(S().due)||28,last),23,59,59)}
-function renderBrand(){const s=S(),org=s.org||'Kelas';$('#brandOrg').textContent=org;document.title='KasKelas — '+org;$('#welcomeHi').textContent=`HALO, ${(s.treasurer||'BENDAHARA').toUpperCase()}! 👋`;$('#welcomeTitle').textContent=`Kas ${org}`;
+function renderBrand(){const s=S(),org=s.org||'Kelas';$('#brandOrg').textContent=org;document.title='KasKelas — '+org;$('#welcomeHi').textContent=`HALO, ${(memberInfo?memberInfo.member.name:(s.treasurer||'BENDAHARA')).toUpperCase()}! 👋`;$('#welcomeTitle').textContent=`Kas ${org}`;
  const dd=dueDate(currentMonth),days=Math.ceil((dd-now)/864e5),unpaid=activeMembers().filter(m=>paidFor(m.id,currentMonth)<Number(m.fee||0)).length;
  $('#welcomeSub').textContent=`Iuran ${money(s.fee)}/${s.period==='weekly'?'minggu':'bulan'} · jatuh tempo tanggal ${s.due} (${dueLabel()})${unpaid?' · '+unpaid+' anggota belum lunas':''}`}
 function updateHint(){$('#setHint').textContent=`Tagihan per anggota: ${money(perMonth(Number($('#setFee').value)||0,$('#setPeriod').value))} / bulan`}
@@ -531,7 +552,7 @@ function explain(e) {
   const m = String((e && e.message) || e || '');
   if (/SELF/.test(m)) return 'Anda tidak bisa mencabut akses admin Anda sendiri.';
   if (/FORBIDDEN/.test(m)) return 'Akses ditolak. Akun ini bukan admin.';
-  if (/kas_records|member_pins|schema cache|does not exist|PGRST20|42P01|is_admin|list_admins|member_login/i.test(m))
+  if (/kas_records|member_pins|schema cache|does not exist|PGRST20|42P01|is_admin|list_admins|member_login|member_snapshot/i.test(m))
     return 'Database belum disiapkan. Jalankan supabase_setup.sql di SQL Editor Supabase.';
   if (/fetch|network|failed to load/i.test(m)) return 'Tidak bisa terhubung ke server. Periksa koneksi internet Anda.';
   return m || 'Terjadi kesalahan.';
@@ -593,6 +614,10 @@ async function memberLogin(nim, pin) {
   const { data: r, error } = await sb.rpc('member_login', { p_nim: nim, p_pin: pin, p_months: [0, 1, 2, 3, 4, 5].map(monthKey) });
   if (error) throw error;
   if (r && r.error) return r.error;
+  const { data: snapRes, error: snapErr } = await sb.rpc('member_snapshot', { p_nim: nim, p_pin: pin });
+  if (snapErr) throw snapErr;
+  if (snapRes && snapRes.error) return snapRes.error;
+  data = fromRows(snapRes.rows || []);
   memberInfo = r;
   memberCred = { nim, pin };
   try {
@@ -604,8 +629,8 @@ async function memberLogin(nim, pin) {
 
 const MEMBER_ERR = {
   LOCKED: 'Terlalu banyak percobaan salah. Coba lagi 10 menit lagi.',
-  INVALID: 'NIM atau PIN salah.',
-  NO_PIN: 'PIN belum dibuat. Minta ke bendahara.'
+  INVALID: 'NIM atau password salah. Password sama dengan NIM.',
+  NO_PIN: 'Akun belum siap. Hubungi bendahara.'
 };
 const SUBMIT_ERR = {
   BAD_INPUT: 'Data tidak valid. Periksa nominal dan bukti pembayaran.',
@@ -637,7 +662,7 @@ function mode() {
   b.classList.remove('loading');
   b.classList.toggle('guest', !x);
   b.classList.toggle('member', !!x && x.role === 'member');
-  $('#whoami').textContent = admin ? 'Masuk: ' + admin.email : '';
+  $('#whoami').textContent = admin ? 'Masuk: ' + admin.email : memberInfo ? 'Masuk: ' + memberInfo.member.name : '';
   renderAuth();
   portal();
 }
@@ -650,7 +675,7 @@ async function logout() {
     await sb.auth.signOut().catch(() => {});
     admin = null; data = norm({}); snap = new Map(); pinSet = new Set(); adminList = []; dirty = false;
   }
-  memberInfo = null; memberCred = null; memberBanner = '';
+  memberInfo = null; memberCred = null; memberBanner = ''; data = norm({});
   localStorage.removeItem(MEMBER_KEY);
   mode();
   renderAll();
@@ -660,7 +685,7 @@ function renderAuth() {
   const L = $('#loginPage');
   if (sess()) { L.innerHTML = ''; return; }
   const org = localStorage.getItem('kaskelas_org') || S().org;
-  const memberForm = `<form id="memForm">${field('nim', 'NIM', 'text', '', { required: true })}${field('pin', 'PIN', 'password', '', { required: true })}<p class="note">PIN diberikan oleh bendahara.</p><div class="lg-err" id="authErr"></div><button class="primary" type="submit">Masuk</button></form>`;
+  const memberForm = `<form id="memForm">${field('nim', 'NIM', 'text', '', { required: true })}${field('pin', 'Password', 'password', '', { required: true })}<p class="note">Password sama dengan NIM.</p><div class="lg-err" id="authErr"></div><button class="primary" type="submit">Masuk</button></form>`;
   const adminForm = `<form id="admForm">${field('email', 'Email admin', 'email', '', { required: true })}${field('pw', 'Password', 'password', '', { required: true })}<div class="lg-err" id="authErr"></div><button class="primary" type="submit">Masuk</button></form>`;
   L.innerHTML = `<div class="lg"><h2>KasKelas</h2><p class="note">${esc(org)}</p>
     <div class="tabs"><button type="button" class="secondary ${tab === 'm' ? 'on' : ''}" data-tab="m">Anggota</button><button type="button" class="secondary ${tab === 'a' ? 'on' : ''}" data-tab="a">Admin</button></div>
@@ -683,7 +708,7 @@ document.addEventListener('submit', async e => {
     } else {
       const code = await memberLogin(v.nim.trim(), v.pin.trim());
       if (code) err(MEMBER_ERR[code] || 'Login gagal.');
-      else { mode(); renderAll(); }
+      else { mode(); renderAll(); navigate('dashboard'); remCycle(); }
     }
   } catch (x) {
     err(explain(x));
@@ -736,6 +761,7 @@ document.addEventListener('submit', async e => {
     if (error) throw error;
     if (r && r.error) { alert(SUBMIT_ERR[r.error] || 'Gagal mengirim bukti.'); btn.disabled = false; return; }
     await memberLogin(memberCred.nim, memberCred.pin);
+    renderAll();
     memberBanner = '<div class="pp-card" style="background:var(--mint)"><strong>✓ Bukti terkirim.</strong><p class="note">Pembayaranmu menunggu konfirmasi bendahara.</p></div>';
     portal();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -842,6 +868,19 @@ document.addEventListener('click', async e => {
   }
 });
 
+/* ---------- Penyegaran data anggota (baca-saja) ---------- */
+
+async function refreshMember() {
+  if (!memberInfo || !memberCred || document.hidden) return;
+  const ae = document.activeElement, f = document.querySelector('#payForm input[type=file]');
+  if ((ae && ae.closest && ae.closest('#payForm')) || (f && f.files && f.files.length)) return;   // jangan ganggu form yang sedang diisi
+  try {
+    const c = memberCred;
+    if ((await memberLogin(c.nim, c.pin)) === '') renderAll();
+  } catch (e) { console.warn('Penyegaran anggota gagal', e); }
+}
+setInterval(refreshMember, 60000);
+
 /* ---------- Mulai aplikasi ---------- */
 
 function fatal(msg) {
@@ -853,7 +892,7 @@ function fatal(msg) {
 async function boot() {
   window.addEventListener('hashchange', () => { if (/bayar/i.test(location.hash)) tab = 'm'; renderAuth(); });
   window.addEventListener('beforeunload', e => { if (dirty || syncing) { e.preventDefault(); e.returnValue = ''; } });
-  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { refresh(); refreshMember(); } });
   if (!sb) { fatal('Pustaka Supabase gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.'); return; }
   sb.auth.onAuthStateChange(ev => { if (ev === 'SIGNED_OUT' && admin) { admin = null; mode(); } });
   try {
@@ -881,6 +920,7 @@ $('#csvFile').onchange=async e=>{const file=e.target.files[0];e.target.value='';
  if(!add.length){alert(`Tidak ada anggota baru. Dilewati: ${dup} sudah ada, ${bad} baris tidak valid (nama kosong atau NIM rusak format Excel).`);return}
  if(confirm(`Impor ${add.length} anggota baru?\n${dup} dilewati (sudah ada), ${bad} baris tidak valid.`)){data.members.push(...add);save();toast(`${add.length} anggota berhasil diimpor.`)}}catch(err){alert(err.message||'File CSV tidak bisa dibaca.')}};
 boot();
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
 </script>
 </body>
