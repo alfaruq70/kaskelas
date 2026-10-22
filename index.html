@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KasKelas — Bendahara Kelas</title>
+<style>
+:root{--bg:#f4f7f6;--surface:#fff;--text:#172b27;--muted:#73827e;--line:#e4ece8;--green:#13795b;--green2:#0d6047;--mint:#e7f5ef;--orange:#fff1dc;--red:#fdebea;--shadow:0 10px 28px rgba(24,63,49,.06);--radius:18px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text)}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}.sidebar{background:#103f32;color:#fff;padding:25px 17px;display:flex;flex-direction:column;gap:25px}.brand{display:flex;gap:12px;align-items:center;padding:0 9px}.brand-icon{width:42px;height:42px;border-radius:14px;background:#d8f4e7;color:#0e6048;display:grid;place-items:center;font-size:22px;font-weight:900}.brand h1{font-size:17px;margin:0;letter-spacing:.2px}.brand p{margin:4px 0 0;color:#a9d0c0;font-size:11px}.nav-label{color:#8bb8a7;font-size:10px;font-weight:800;letter-spacing:1.3px;padding:0 12px;margin-bottom:8px}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#c6ded4;text-align:left;padding:12px 13px;border-radius:12px;display:flex;gap:12px;align-items:center;font-size:13px;font-weight:600}.nav button span:first-child{font-size:17px;width:20px;text-align:center}.nav button:hover,.nav button.active{background:#23634e;color:#fff}.side-bottom{margin-top:auto;background:#1a5141;border:1px solid #2c6b56;border-radius:15px;padding:15px;color:#d5ebe2;font-size:12px;line-height:1.6}.side-bottom strong{display:block;color:white;margin-bottom:5px}.main{min-width:0;padding:28px 32px 42px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:26px}.eyebrow{font-size:11px;color:var(--green);font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.topbar h2{font-size:25px;margin:5px 0 0;letter-spacing:-.7px}.top-actions{display:flex;gap:10px;align-items:center}.pill{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 13px;color:var(--muted);font-size:12px}.primary,.secondary,.danger{border:0;border-radius:11px;padding:11px 15px;font-size:12px;font-weight:750;display:inline-flex;align-items:center;justify-content:center;gap:7px}.primary{background:var(--green);color:#fff}.primary:hover{background:var(--green2)}.secondary{background:#fff;color:var(--green);border:1px solid var(--line)}.danger{background:var(--red);color:#a62d28}.welcome{background:linear-gradient(115deg,#135a43,#16805d);color:#fff;border-radius:22px;padding:25px 28px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;position:relative}.welcome:after{content:"";position:absolute;width:220px;height:220px;border:1px solid #ffffff22;border-radius:50%;right:70px;top:-125px;box-shadow:0 0 0 28px #ffffff09,0 0 0 58px #ffffff06}.welcome h3{font-size:20px;margin:7px 0 8px;letter-spacing:-.4px}.welcome p{margin:0;color:#c4e7d8;font-size:12px}.welcome .primary{background:#fff;color:var(--green);position:relative;z-index:1;white-space:nowrap}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:22px}.stat,.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.stat{padding:18px 19px}.stat-top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:11px;font-weight:650;gap:5px}.stat-icon{width:35px;height:35px;border-radius:11px;background:var(--mint);display:grid;place-items:center;font-size:17px}.stat strong{display:block;font-size:23px;letter-spacing:-.8px;margin:14px 0 5px}.stat small{font-size:11px;color:var(--muted)}.positive{color:var(--green)!important}.negative{color:#c34840!important}.content-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr);gap:18px;margin-bottom:20px}.panel{padding:21px;min-width:0}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:17px}.panel-head h3{margin:0;font-size:15px;letter-spacing:-.2px}.panel-head p{margin:5px 0 0;color:var(--muted);font-size:11px}.text-btn{border:0;background:transparent;color:var(--green);font-weight:750;font-size:11px}.chart{height:180px;display:flex;align-items:end;gap:13px;padding:10px 4px 0;border-bottom:1px solid var(--line);background:repeating-linear-gradient(to bottom,transparent 0,transparent 43px,#edf2ef 44px,#edf2ef 45px)}.bar-group{height:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:end;gap:8px;min-width:0}.bar-pair{height:calc(100% - 20px);display:flex;align-items:end;gap:4px;width:100%;justify-content:center}.bar{width:13px;max-width:35%;border-radius:5px 5px 0 0;min-height:3px}.bar.in{background:#2ca77d}.bar.out{background:#b8ded0}.bar-label{font-size:10px;color:var(--muted);padding-bottom:9px}.legend{display:flex;gap:16px;margin-top:15px;font-size:10px;color:var(--muted)}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.progress-list{display:grid;gap:17px}.progress-row{display:grid;gap:8px}.progress-meta{display:flex;justify-content:space-between;gap:8px;font-size:11px}.progress-meta span{color:var(--muted)}.track{height:7px;border-radius:20px;background:#edf2ef;overflow:hidden}.track div{height:100%;background:var(--green);border-radius:20px}.activity{display:grid;gap:0}.activity-row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #edf1ef}.activity-row:last-child{border-bottom:0}.activity-icon{width:36px;height:36px;border-radius:12px;background:var(--mint);display:grid;place-items:center}.activity-info{flex:1;min-width:0}.activity-info strong{font-size:12px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.activity-info small{font-size:10px;color:var(--muted);display:block;margin-top:4px}.amount{font-size:12px;font-weight:800;white-space:nowrap}.section{display:none}.section.active{display:block}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}.toolbar input,.toolbar select,.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;color:var(--text);outline:none;width:100%;font-size:12px}.toolbar input{max-width:260px}.toolbar select{width:auto;min-width:135px}.table-wrap{overflow:auto;width:100%}table{border-collapse:collapse;width:100%;white-space:nowrap;font-size:12px}th{text-align:left;background:#f8faf9;color:#71817b;font-size:10px;text-transform:uppercase;letter-spacing:.6px;font-weight:800}td,th{padding:13px 12px;border-bottom:1px solid #edf1ef}tbody tr:hover{background:#fbfdfc}.status{display:inline-flex;padding:5px 8px;border-radius:7px;font-size:10px;font-weight:800}.status.paid{background:var(--mint);color:#16724f}.status.partial{background:var(--orange);color:#a56413}.status.unpaid{background:var(--red);color:#b53c35}.row-actions{display:flex;gap:5px}.icon-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:11px;color:var(--muted)}.empty{text-align:center;color:var(--muted);padding:30px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:7px}.field label{font-size:11px;font-weight:750;color:#52645d}.field.full{grid-column:1/-1}.modal-backdrop{position:fixed;inset:0;background:#102e25a8;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-backdrop.show{display:flex}.modal{width:min(560px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:20px;padding:23px;box-shadow:0 25px 80px #001b1433}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h3{margin:0;font-size:18px}.close{border:0;background:#f0f5f2;border-radius:9px;width:32px;height:32px;font-size:19px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.report-box{background:#f8fbf9;border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:15px}.report-line{display:flex;justify-content:space-between;gap:15px;padding:11px 0;border-bottom:1px solid var(--line);font-size:12px}.report-line:last-child{border:0;font-weight:800}.note{font-size:11px;line-height:1.6;color:var(--muted)}.mobile-menu{display:none}.toast{position:fixed;right:20px;bottom:20px;background:#103f32;color:white;border-radius:12px;padding:13px 17px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;z-index:30}.toast.show{opacity:1;transform:translateY(0)}.footer-note{font-size:10px;color:var(--muted);margin-top:22px;text-align:center}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.main{padding:22px}.app{grid-template-columns:220px minmax(0,1fr)}}
+@media(max-width:720px){.app{display:block}.sidebar{position:fixed;z-index:20;left:-265px;top:0;bottom:0;width:250px;transition:left .25s;box-shadow:15px 0 35px #0002}.sidebar.open{left:0}.main{padding:18px 14px 30px}.topbar{align-items:flex-start}.topbar h2{font-size:22px}.mobile-menu{display:inline-flex}.top-actions .pill{display:none}.welcome{padding:21px;align-items:flex-start;flex-direction:column}.welcome h3{font-size:18px}.stats{gap:10px}.stat{padding:14px}.stat strong{font-size:20px}.stat-top{font-size:10px}.stat-icon{width:30px;height:30px}.panel{padding:16px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.toolbar input{max-width:none;flex:1}.toolbar select{flex:1}.chart{gap:5px}.bar{width:9px}.top-actions .primary{padding:10px 11px}.topbar{gap:8px}}
+@media print{body{background:#fff}.sidebar,.top-actions,.toolbar,.text-btn,.row-actions,.welcome .primary,.mobile-menu{display:none!important}.app{display:block}.main{padding:0}.section{display:none!important}#section-reports{display:block!important}.panel,.stat{box-shadow:none;break-inside:avoid}.report-box{border:1px solid #ddd}.footer-note{display:none}}
+.ann-card{border:1px solid var(--line);border-radius:14px;padding:15px 16px;margin-bottom:12px;background:#fff}.ann-card.pinned{background:var(--mint);border-color:#bfe3d3}.ann-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.ann-head strong{font-size:14px}.ann-head small{color:var(--muted);font-size:10px;white-space:nowrap}.ann-card p{font-size:12px;line-height:1.7;margin:8px 0 12px}.check{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:#52645d;margin:16px 0 2px;line-height:1.5}.check input{margin-top:3px}.hint{font-size:11px;color:var(--green);font-weight:700}
+.cal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.cal-head h3{margin:0;font-size:16px;text-transform:capitalize}.cal-nav{display:flex;gap:6px}.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.cal-dow{font-size:10px;font-weight:800;color:var(--muted);text-align:center;padding:6px 0;text-transform:uppercase}.cal-cell{min-height:80px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:5px 6px;text-align:left;display:flex;flex-direction:column;gap:3px;font-size:11px;overflow:hidden;cursor:pointer;font-family:inherit}.cal-cell:hover{background:#fbfdfc}.cal-cell.today{border-color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}.cal-cell.sel{background:var(--mint)}.cal-num{font-weight:800;font-size:11px}.cal-chips{display:flex;flex-direction:column;gap:2px}.cal-chip{display:block;font-size:9px;line-height:1.25;border-radius:5px;padding:2px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}.chip-due{background:#fdebea;color:#b53c35}.chip-plan{background:#e8f0ff;color:#3452a4}.chip-rekap{background:var(--mint);color:#16724f}.chip-agenda{background:#fff3df;color:#a56413}.chip-money{background:#f0f5f2;color:#52645d}.ev-row{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #edf1ef}.ev-row:last-child{border:0}.ev-dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex:none}.ev-info{flex:1;min-width:0}.ev-info strong{display:block;font-size:12px}.ev-info small{color:var(--muted);font-size:11px}
+@media(max-width:720px){.cal-cell{min-height:50px;padding:3px}.cal-chips{flex-direction:row;flex-wrap:wrap}.cal-chip{width:7px;height:7px;padding:0;font-size:0;border-radius:50%}.chip-due{background:#e0554d}.chip-plan{background:#4c6fd1}.chip-rekap{background:#2ca77d}.chip-agenda{background:#e5a44b}.chip-money{background:#9aa9a3}}
+.rem-float{position:fixed;left:270px;bottom:22px;width:min(350px,calc(100vw - 24px));background:#fff;border:1px solid #f1c9c5;border-left:5px solid #e0554d;border-radius:16px;box-shadow:0 18px 40px rgba(25,50,40,.22);padding:14px 16px;z-index:60;transform:translateX(-140%)}.rem-float[hidden]{display:none}.rem-float.in{animation:remIn .9s cubic-bezier(.2,.8,.2,1) forwards}.rem-float.float{transform:translateX(0);animation:remFloat 3.4s ease-in-out infinite}.rem-float.float:hover{animation-play-state:paused}
+.rem-float.out{animation:remOut .9s cubic-bezier(.55,0,.8,.4) forwards}
+@keyframes remIn{from{transform:translateX(-140%)}to{transform:translateX(0)}}@keyframes remOut{from{transform:translateX(0)}to{transform:translateX(-140%)}}@keyframes remFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,-9px)}}
+.rem-head{display:flex;gap:10px;align-items:flex-start}.rem-bell{font-size:22px;line-height:1}.rem-head>div{flex:1;min-width:0}.rem-head strong{display:block;font-size:13px}.rem-head small{font-size:11px;color:#b53c35;font-weight:700}.rem-x{border:0;background:#f3f6f4;border-radius:8px;width:26px;height:26px;cursor:pointer;font-size:16px;line-height:1;color:#52645d}.rem-sum{margin:10px 0 6px;font-size:12px;font-weight:800;background:#fdebea;color:#b53c35;border-radius:9px;padding:7px 10px}.rem-float ul{list-style:none;margin:0;padding:0}.rem-float li{display:flex;justify-content:space-between;gap:10px;font-size:12px;padding:6px 2px;border-bottom:1px dashed #edf1ef}.rem-float li:last-child{border:0}.rem-float li span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rem-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:10px;color:var(--muted)}.rem-foot button{border:0;background:none;color:var(--green);font-weight:800;font-size:11px;cursor:pointer;font-family:inherit;padding:0}
+@media(max-width:1050px){.rem-float{left:240px}}@media(max-width:720px){.rem-float{left:12px;bottom:14px}}@media(prefers-reduced-motion:reduce){.rem-float.float{animation:none}}@media print{.rem-float{display:none!important}}
+#payPage{display:none;max-width:560px;margin:0 auto;padding:20px 14px 40px}body.member .app,body.member .rem-float{display:none!important}body.member #payPage{display:block}
+.pp-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:var(--shadow)}.pp-card h3{margin:0 0 6px;font-size:16px}.pp-qris{display:block;width:min(260px,100%);margin:12px auto;border-radius:12px}
+.acc{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}.acc small{display:block;color:var(--muted);margin-top:2px}.pp-thumb{width:44px;height:44px;object-fit:cover;border-radius:8px;cursor:pointer;border:1px solid var(--line)}
+#loginPage{display:none;min-height:100vh;place-items:center;padding:20px}body.guest #loginPage{display:grid}body.guest .app,body.guest #payPage,body.guest .rem-float{display:none!important}
+.lg{width:min(400px,100%);background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}.lg h2{margin:0 0 4px;font-size:22px}.lg h3{margin:14px 0 4px;font-size:16px}.lg .field{margin-bottom:12px}.tabs{display:flex;gap:6px;margin:16px 0}.tabs button{flex:1}.tabs button.on{background:var(--green);color:#fff}.lg-err{color:#b53c35;font-size:13px;min-height:18px;margin-bottom:6px}
+#splash{display:none;min-height:100vh;place-items:center;color:var(--muted);font-weight:700;font-size:15px}body.loading #splash{display:grid}body.loading .app,body.loading #loginPage,body.loading #payPage,body.loading .rem-float{display:none!important}
+.lg button.primary[type=submit]{width:100%;margin-top:6px}#syncPill{cursor:default;white-space:nowrap}#syncPill.ok{color:var(--green)}#syncPill.pending{color:var(--muted)}#syncPill.err{background:var(--red);color:#b53c35;border-color:#f1c9c5;cursor:pointer}
+</style>
+</head>
+<body class="loading">
+<div id="splash">⏳ Memuat KasKelas…</div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="brand-icon">K</div><div><h1>KasKelas</h1><p id="brandOrg">CLASS FINANCE MANAGER</p></div></div>
+  <div><div class="nav-label">MENU UTAMA</div><nav class="nav">
+    <button class="active" data-section="dashboard"><span>◫</span>Dashboard</button>
+    <button data-section="members"><span>♙</span>Data Anggota</button>
+    <button data-section="payments"><span>▤</span>Pembayaran Kas</button>
+    <button data-section="verify"><span>✔</span>Konfirmasi Bayar<b id="vBadge" class="status unpaid" style="margin-left:auto;display:none"></b></button>
+    <button data-section="transactions"><span>⇄</span>Transaksi Kas</button>
+    <button data-section="reports"><span>▧</span>Laporan Keuangan</button>
+    <button data-section="calendar"><span>🗓</span>Kalender</button>
+    <button data-section="announcements"><span>📢</span>Pengumuman</button>
+    <button data-section="settings"><span>⚙</span>Pengaturan Iuran</button>
+    <button data-section="accounts"><span>🔐</span>Kelola Akun</button>
+  </nav></div>
+  <div><div class="nav-label">PREFERENSI</div><nav class="nav">
+    <button id="backupBtn"><span>⇩</span>Ekspor Data JSON</button>
+    <button id="importBtn"><span>⇧</span>Impor Data JSON</button>
+    <button id="resetBtn"><span>↻</span>Reset Data</button>
+    <button id="logoutBtn"><span>⎋</span>Keluar</button>
+  </nav></div>
+  <div class="side-bottom"><strong>☁ Tersimpan di cloud</strong>Data tersinkron lewat Supabase dan bisa dibuka dari perangkat mana pun. Ekspor cadangan sesekali sebagai arsip.<div id="whoami" style="margin-top:8px;opacity:.8;word-break:break-all"></div></div>
+</aside>
+<main class="main">
+  <header class="topbar"><div style="display:flex;gap:10px;align-items:flex-start"><button class="secondary mobile-menu" id="menuBtn">☰</button><div><div class="eyebrow">Pusat Administrasi Keuangan</div><h2 id="pageTitle">Dashboard</h2></div></div><div class="top-actions"><div class="pill ok" id="syncPill" title="Status sinkronisasi ke cloud">☁ …</div><div class="pill" id="todayPill">📅 —</div><button class="primary" id="quickAdd">＋ Tambah Transaksi</button></div></header>
+
+  <section class="section active" id="section-dashboard">
+    <div class="welcome"><div><div class="eyebrow" style="color:#bce8d5" id="welcomeHi">HALO, BENDAHARA! 👋</div><h3 id="welcomeTitle">Keuangan kelas rapi, transparan, dan terkendali.</h3><p id="welcomeSub">Pantau kas, catat pembayaran anggota, dan buat laporan dalam satu tempat.</p></div><button class="primary" id="welcomeAdd">＋ Catat transaksi</button></div>
+    <div class="panel" id="dashAnnouncements" style="margin-bottom:20px;display:none"></div>
+    <div class="stats">
+      <div class="stat"><div class="stat-top">Saldo Kas Saat Ini <div class="stat-icon">💰</div></div><strong id="statBalance">Rp0</strong><small class="positive">Saldo pemasukan dikurangi pengeluaran</small></div>
+      <div class="stat"><div class="stat-top">Total Pemasukan <div class="stat-icon">↗</div></div><strong id="statIncome">Rp0</strong><small>Akumulasi semua pemasukan</small></div>
+      <div class="stat"><div class="stat-top">Total Pengeluaran <div class="stat-icon" style="background:#fff1dc">↘</div></div><strong id="statExpense">Rp0</strong><small>Akumulasi semua pengeluaran</small></div>
+      <div class="stat"><div class="stat-top">Anggota Terdaftar <div class="stat-icon" style="background:#edf0ff">♙</div></div><strong id="statMembers">0</strong><small id="statPaid">0 anggota lunas bulan ini</small></div>
+    </div>
+    <div class="content-grid">
+      <div class="panel"><div class="panel-head"><div><h3>Arus Kas</h3><p>Ringkasan pemasukan dan pengeluaran per bulan</p></div><span class="pill">6 bulan terakhir</span></div><div class="chart" id="cashChart"></div><div class="legend"><span><i class="dot" style="background:#2ca77d"></i>Pemasukan</span><span><i class="dot" style="background:#b8ded0"></i>Pengeluaran</span></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Status Kas Bulanan</h3><p>Progres pembayaran anggota bulan ini</p></div><button class="text-btn" data-goto="payments">Lihat detail →</button></div><div class="progress-list" id="paymentProgress"></div></div>
+    </div>
+    <div class="panel"><div class="panel-head"><div><h3>Transaksi Terbaru</h3><p>Aktivitas keuangan yang baru dicatat</p></div><button class="text-btn" data-goto="transactions">Lihat semua →</button></div><div class="activity" id="recentActivity"></div></div>
+  </section>
+
+  <section class="section" id="section-members">
+    <div class="panel"><div class="panel-head"><div><h3>Data Anggota Kelas</h3><p>Kelola identitas anggota dan besaran kas wajib bulanan.</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" id="csvTpl">⇩ Template CSV</button><button class="secondary" id="csvBtn">⇧ Impor CSV</button><button class="primary" id="addMember">＋ Tambah Anggota</button></div></div><div class="toolbar"><input id="memberSearch" placeholder="Cari nama atau NIM..."><select id="memberFilter"><option value="all">Semua status</option><option value="active">Aktif</option><option value="inactive">Tidak aktif</option></select></div><div class="table-wrap"><table><thead><tr><th>No.</th><th>Nama</th><th>NIM / ID</th><th>Kontak</th><th>Kas / Bulan</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="membersBody"></tbody></table></div></div>
+  </section>
+
+  <section class="section" id="section-payments">
+    <div class="panel"><div class="panel-head"><div><h3>Pembayaran Kas</h3><p>Catat pembayaran kas dan pantau tunggakan anggota.</p></div><button class="primary" id="addPayment">＋ Catat Pembayaran</button></div><div class="toolbar"><input id="paymentSearch" placeholder="Cari nama anggota..."><select id="paymentMonth"></select><select id="paymentStatus"><option value="all">Semua status</option><option value="LUNAS">Lunas</option><option value="SEBAGIAN">Sebagian</option><option value="BELUM">Belum bayar</option></select><button class="secondary" id="copyArrears">📋 Salin rekap tunggakan</button></div><div class="table-wrap"><table><thead><tr><th>Anggota</th><th>Bulan</th><th>Tagihan</th><th>Dibayar</th><th>Sisa</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="paymentsBody"></tbody></table></div><p class="note">Pembayaran yang dicatat di menu ini otomatis masuk ke transaksi pemasukan.</p></div>
+  </section>
+
+  <section class="section" id="section-verify"><div class="panel"><div class="panel-head"><div><h3>Konfirmasi Pembayaran</h3><p>Pembayaran yang dikirim anggota lewat halaman bayar. Cek buktinya, lalu terima.</p></div></div><div class="table-wrap"><table><thead><tr><th>Anggota</th><th>Bulan</th><th>Nominal</th><th>Via</th><th>Tanggal</th><th>Bukti</th><th>Aksi</th></tr></thead><tbody id="pendBody"></tbody></table></div></div></section>
+  <section class="section" id="section-transactions">
+    <div class="panel"><div class="panel-head"><div><h3>Buku Kas</h3><p>Semua pemasukan dan pengeluaran kelas tercatat di sini.</p></div><button class="primary" id="addTransaction">＋ Tambah Transaksi</button></div><div class="toolbar"><input id="transactionSearch" placeholder="Cari keterangan transaksi..."><select id="transactionType"><option value="all">Semua jenis</option><option value="income">Pemasukan</option><option value="expense">Pengeluaran</option></select><select id="transactionMonth"></select></div><div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Jenis</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="transactionsBody"></tbody></table></div></div>
+  </section>
+
+  <section class="section" id="section-reports">
+    <div class="panel"><div class="panel-head"><div><h3>Laporan Keuangan</h3><p>Ringkasan keuangan yang dapat dicetak atau disimpan sebagai PDF.</p></div><button class="primary" id="printReport">⤓ Cetak / Simpan PDF</button></div><div class="toolbar"><label style="font-size:12px;color:var(--muted)">Periode laporan</label><select id="reportMonth"></select><button class="secondary" id="refreshReport">Perbarui laporan</button></div><div id="reportContent"></div><p class="note" style="margin-top:18px">Untuk menyimpan sebagai PDF: tekan “Cetak / Simpan PDF”, lalu pilih “Save as PDF” pada dialog cetak browser.</p></div>
+  </section>
+  <section class="section" id="section-calendar"><div class="content-grid">
+    <div class="panel"><div class="cal-head"><h3 id="calTitle"></h3><div class="cal-nav"><button class="secondary" id="calPrev">‹</button><button class="secondary" id="calToday">Hari ini</button><button class="secondary" id="calNext">›</button></div></div>
+    <div class="cal-grid" id="calGrid"></div>
+    <label class="check"><input type="checkbox" id="calAuto" checked><span>Tampilkan rencana rutin bendahara: jatuh tempo kas, pengingat H-3, dan rekap akhir bulan (otomatis mengikuti Pengaturan Iuran).</span></label></div>
+    <div><div class="panel" id="calDetail" style="margin-bottom:18px"></div><div class="panel"><div class="panel-head"><div><h3>Agenda 30 hari ke depan</h3><p>Rencana otomatis dan agenda buatan Anda</p></div></div><div id="calUpcoming"></div></div></div>
+  </div></section>
+  <section class="section" id="section-announcements">
+    <div class="panel"><div class="panel-head"><div><h3>Pengumuman Kelas</h3><p>Informasi untuk seluruh anggota. Tampil di dashboard dan bisa disalin ke WhatsApp.</p></div><button class="primary" id="addAnnouncement">＋ Buat Pengumuman</button></div><div id="annList"></div></div>
+  </section>
+  <section class="section" id="section-settings">
+    <div class="panel"><div class="panel-head"><div><h3>Pengaturan Iuran</h3><p>Atur nama organisasi, nominal, dan periode tagihan untuk seluruh kelas.</p></div></div>
+    <form id="settingsForm"><div class="form-grid">
+      <div class="field"><label>Nama organisasi *</label><input id="setOrg" required></div>
+      <div class="field"><label>Nama bendahara</label><input id="setTreasurer" placeholder="Tampil di sapaan dashboard"></div>
+      <div class="field"><label>Nominal kas (Rupiah) *</label><input id="setFee" type="number" min="0" required></div>
+      <div class="field"><label>Periode tagihan</label><select id="setPeriod"><option value="monthly">Bulanan</option><option value="weekly">Mingguan (×4 per bulan)</option></select></div>
+      <div class="field"><label>Tanggal jatuh tempo (1–31) *</label><input id="setDue" type="number" min="1" max="31" required></div>
+      <div class="field"><label>&nbsp;</label><div class="hint" id="setHint"></div></div>
+    </div>
+    <label class="check"><input type="checkbox" id="setApply" checked><span>Terapkan nominal ini ke kas wajib semua anggota. Nominal juga jadi saran saat mencatat pemasukan baru dan dasar hitung tunggakan.</span></label>
+    <div class="modal-actions" style="justify-content:flex-start"><button type="submit" class="primary">✓ Simpan pengaturan</button></div></form></div>
+    <div class="panel" style="margin-top:18px"><div class="panel-head"><div><h3>Pembayaran Online</h3><p>QRIS dan rekening yang tampil di halaman bayar anggota.</p></div></div>
+    <form id="payCfg"><div class="form-grid">
+      <div class="field full"><label>Link halaman bayar (bagikan ke anggota)</label><input id="setLink" readonly></div>
+      <div class="field full"><label>Gambar QRIS</label><input id="setQris" type="file" accept="image/*"><div id="setQrisPrev"></div></div>
+      <div class="field full"><label>Rekening / e-wallet (satu per baris: Bank|Nomor|Atas nama)</label><textarea id="setAcc" rows="4" placeholder="BCA|1234567890|Nama Bendahara&#10;DANA|081234567890|Nama Bendahara"></textarea></div>
+    </div>
+    <div class="modal-actions" style="justify-content:flex-start"><button type="submit" class="primary">✓ Simpan pembayaran online</button><button type="button" class="secondary" data-copy-link>📋 Salin link</button></div></form></div>
+  </section>
+  <section class="section" id="section-accounts">
+  <div class="panel"><div class="panel-head"><div><h3>Akun Admin</h3><p>Admin masuk dengan email. Buat akunnya dulu di Supabase (Authentication → Users → Add user), lalu beri akses di sini.</p></div><button class="primary" id="addAdmin">＋ Tambah Admin</button></div><div class="table-wrap"><table><thead><tr><th>Email admin</th><th>Aksi</th></tr></thead><tbody id="admBody"></tbody></table></div></div>
+  <div class="panel" style="margin-top:18px"><div class="panel-head"><div><h3>Akses Anggota</h3><p>Anggota masuk dengan NIM dan PIN dari bendahara. Mereka hanya melihat status kas sendiri dan mengirim bukti bayar.</p></div><button class="secondary" id="pinAll">🔑 Buat PIN semua yang belum punya</button></div><div class="table-wrap"><table><thead><tr><th>Anggota</th><th>NIM</th><th>PIN</th><th>Aksi</th></tr></thead><tbody id="pinBody"></tbody></table></div></div>
+  <div class="panel" style="margin-top:18px"><h3>Panduan mengelola website</h3><ol class="note" style="line-height:1.9;padding-left:20px"><li>Data tersimpan di cloud Supabase, jadi semua admin melihat data yang sama di perangkat mana pun.</li><li>Admin baru: buat akunnya di Supabase (Authentication → Users → Add user), lalu klik Tambah Admin dan isi emailnya. Sebaiknya punya satu admin cadangan, misalnya wakil bendahara.</li><li>Anggota baru: isi NIM di Data Anggota, buka Kelola Akun, klik Buat PIN, lalu kirim lewat WA.</li><li>Tiap ada kiriman bukti: menu Konfirmasi Bayar, cek bukti, lalu Terima atau Tolak.</li><li>Bayar tunai: Pembayaran Kas, Catat Pembayaran. Pengeluaran: Transaksi Kas, lalu ＋ Nota.</li><li>Akhir bulan: cetak Laporan, lalu Ekspor Data JSON sebagai arsip tambahan.</li><li>Anggota lupa PIN: Reset PIN. Admin lupa password: reset lewat dashboard Supabase.</li><li>Klik Keluar bila memakai perangkat bersama.</li></ol></div>
+  </section>
+  <div class="footer-note">KasKelas • Administrasi kas kelas yang sederhana dan transparan</div>
+</main>
+</div>
+
+<input type="file" id="csvFile" accept=".csv,text/csv,text/plain" hidden>
+<div id="loginPage"></div>
+<div id="payPage"></div>
+<div class="modal-backdrop" id="modalBackdrop"><div class="modal"><div class="modal-head"><h3 id="modalTitle">Form</h3><button class="close" id="modalClose">×</button></div><form id="modalForm"><div id="modalFields" class="form-grid"></div><div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Batal</button><button type="submit" class="primary" id="saveModal">Simpan</button></div></form></div></div>
+<div class="toast" id="toast"></div><input type="file" id="importFile" accept=".json,application/json" hidden>
+<div class="rem-float" id="reminderFloat" hidden></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js"></script>
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const STORE='kaskelas_v1_data';
+let now=new Date(), currentMonth=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+const COLLS = ['members', 'payments', 'transactions', 'announcements', 'events', 'pending'];
+const defaultData = {
+  members: [], payments: [], transactions: [], announcements: [], events: [], pending: [],
+  settings: { org: 'IAT SEMESTER 3', treasurer: '', fee: 5000, period: 'monthly', due: 28 },
+  pay: { qris: '', accounts: [] }
+};
+let data = norm({}), modalAction = null;
+function norm(d) {
+  d = d || {};
+  const out = {
+    settings: { ...defaultData.settings, ...(d.settings || {}) },
+    pay: { qris: '', accounts: [], ...(d.pay || {}) }
+  };
+  if (!Array.isArray(out.pay.accounts)) out.pay.accounts = [];
+  delete out.pay.auto;
+  for (const c of COLLS) {
+    out[c] = Array.isArray(d[c]) ? d[c] : [];
+    out[c].forEach(it => { if (!it.id) it.id = uid(); });
+  }
+  return out;
+}
+function money(n){return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(Number(n)||0)}
+function dateStr(d){if(!d)return '—';const x=new Date(d+'T00:00:00');return x.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}
+function monthLabel(m){const [y,mo]=m.split('-').map(Number);return new Date(y,mo-1,1).toLocaleDateString('id-ID',{month:'long',year:'numeric'})}
+function esc(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400)}
+function sumTransactions(type,month=null){return data.transactions.filter(t=>(!type||t.type===type)&&(!month||t.date?.startsWith(month))).reduce((s,t)=>s+Number(t.amount||0),0)}
+function balance(){return sumTransactions('income')-sumTransactions('expense')}
+function activeMembers(){return data.members.filter(m=>m.status!=='inactive')}
+function paidFor(memberId,month){return data.payments.filter(p=>p.memberId===memberId&&p.month===month).reduce((s,p)=>s+Number(p.amount||0),0)}
+function ensureMonths(){['paymentMonth','transactionMonth','reportMonth'].forEach(id=>{const el=$('#'+id);if(!el)return;const selected=el.value||currentMonth;const months=new Set([currentMonth,...data.transactions.map(t=>t.date?.slice(0,7)),...data.payments.map(p=>p.month)].filter(Boolean));for(let i=-3;i<12;i++){const d=new Date(now.getFullYear(),now.getMonth()-i,1);months.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`)}const sorted=[...months].sort().reverse();el.innerHTML=sorted.map(m=>`<option value="${m}">${esc(monthLabel(m))}</option>`).join('');el.value=sorted.includes(selected)?selected:currentMonth})}
+function renderDashboard(){
+ $('#statBalance').textContent=money(balance());$('#statIncome').textContent=money(sumTransactions('income'));$('#statExpense').textContent=money(sumTransactions('expense'));$('#statMembers').textContent=activeMembers().length;
+ const members=activeMembers(),paid=members.filter(m=>paidFor(m.id,currentMonth)>=Number(m.fee||0)&&Number(m.fee||0)>0).length;
+ $('#statPaid').textContent=`${paid} dari ${members.length} anggota lunas bulan ini`;
+ const chart=$('#cashChart');chart.innerHTML='';const months=[];for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`)}
+ const vals=months.map(m=>({m,inc:sumTransactions('income',m),out:sumTransactions('expense',m)}));const max=Math.max(1,...vals.flatMap(v=>[v.inc,v.out]));
+ vals.forEach(v=>{const g=document.createElement('div');g.className='bar-group';g.innerHTML=`<div class="bar-pair"><div class="bar in" title="Pemasukan ${money(v.inc)}" style="height:${Math.max(2,v.inc/max*100)}%"></div><div class="bar out" title="Pengeluaran ${money(v.out)}" style="height:${Math.max(2,v.out/max*100)}%"></div></div><div class="bar-label">${new Date(v.m+'-01T00:00:00').toLocaleDateString('id-ID',{month:'short'})}</div>`;chart.append(g)});
+ const totalDue=members.reduce((s,m)=>s+Number(m.fee||0),0),totalPaid=members.reduce((s,m)=>s+Math.min(Number(m.fee||0),paidFor(m.id,currentMonth)),0),percent=totalDue?Math.round(totalPaid/totalDue*100):0;
+ $('#paymentProgress').innerHTML=`<div class="progress-row"><div class="progress-meta"><strong>Pembayaran terkumpul</strong><strong>${percent}%</strong></div><div class="track"><div style="width:${percent}%"></div></div><div class="progress-meta"><span>${money(totalPaid)} terkumpul</span><span>Target ${money(totalDue)}</span></div></div><div class="progress-row"><div class="progress-meta"><strong>Anggota sudah lunas</strong><strong>${paid}/${members.length}</strong></div><div class="track"><div style="width:${members.length?paid/members.length*100:0}%"></div></div></div><div class="progress-row"><div class="progress-meta"><strong>Belum lunas</strong><span>${members.length-paid} anggota</span></div><div class="track"><div style="width:${members.length?(members.length-paid)/members.length*100:0}%;background:#e5a44b"></div></div></div>`;
+ const recent=[...data.transactions].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,5);
+ $('#recentActivity').innerHTML=recent.length?recent.map(t=>`<div class="activity-row"><div class="activity-icon">${t.type==='income'?'↗':'↘'}</div><div class="activity-info"><strong>${esc(t.description)}</strong><small>${dateStr(t.date)} · ${esc(t.category||'Umum')}</small></div><div class="amount ${t.type==='income'?'positive':'negative'}">${t.type==='income'?'+':'−'}${money(t.amount)}</div></div>`).join(''):'<div class="empty">Belum ada transaksi. Mulai dengan mencatat pemasukan atau pengeluaran.</div>';
+}
+function renderMembers(){const q=$('#memberSearch').value.toLowerCase(),f=$('#memberFilter').value;const rows=data.members.filter(m=>(`${m.name} ${m.nim} ${m.contact}`.toLowerCase().includes(q))&&(f==='all'||(m.status||'active')===f));$('#membersBody').innerHTML=rows.length?rows.map((m,i)=>`<tr><td>${i+1}</td><td><strong>${esc(m.name)}</strong></td><td>${esc(m.nim||'—')}</td><td>${esc(m.contact||'—')}</td><td>${money(m.fee)}</td><td><span class="status ${(m.status||'active')==='active'?'paid':'unpaid'}">${(m.status||'active')==='active'?'Aktif':'Tidak aktif'}</span></td><td><div class="row-actions"><button class="icon-btn" data-edit-member="${m.id}">Edit</button><button class="icon-btn" data-delete-member="${m.id}">Hapus</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Belum ada anggota. Tambahkan data anggota kelas.</td></tr>'}
+function renderPayments(){const month=$('#paymentMonth').value||currentMonth,q=$('#paymentSearch').value.toLowerCase(),filter=$('#paymentStatus').value;const rows=activeMembers().filter(m=>m.name.toLowerCase().includes(q)).map(m=>{const due=Number(m.fee||0),paid=paidFor(m.id,month),status=paid>=due&&due>0?'LUNAS':paid>0?'SEBAGIAN':'BELUM';return {m,due,paid,left:Math.max(0,due-paid),status}}).filter(r=>filter==='all'||r.status===filter);$('#paymentsBody').innerHTML=rows.length?rows.map(r=>`<tr><td><strong>${esc(r.m.name)}</strong></td><td>${esc(monthLabel(month))}</td><td>${money(r.due)}</td><td class="positive">${money(r.paid)}</td><td class="${r.left?'negative':'positive'}">${money(r.left)}</td><td><span class="status ${r.status==='LUNAS'?'paid':r.status==='SEBAGIAN'?'partial':'unpaid'}">${r.status==='BELUM'?'BELUM BAYAR':r.status}${r.left&&now>dueDate(month)?' · TELAT':''}</span></td><td><div class="row-actions"><button class="icon-btn" data-pay="${r.m.id}" data-month="${month}">＋ Bayar</button>${r.paid?`<button class="icon-btn" data-rc="${r.m.id}" data-month="${month}">🧾 Kwitansi</button>`:''}${r.left?`<button class="icon-btn" data-wa="${r.m.id}" data-month="${month}">💬 WA</button>`:''}</div></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Tidak ada data pembayaran untuk filter ini.</td></tr>'}
+function renderTransactions(){const q=$('#transactionSearch').value.toLowerCase(),type=$('#transactionType').value,month=$('#transactionMonth').value;const rows=[...data.transactions].filter(t=>(`${t.description} ${t.category}`.toLowerCase().includes(q))&&(type==='all'||t.type===type)&&(!month||t.date?.startsWith(month))).sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#transactionsBody').innerHTML=rows.length?rows.map(t=>`<tr><td>${dateStr(t.date)}</td><td><strong>${esc(t.description)}</strong></td><td>${esc(t.category||'Umum')}</td><td><span class="status ${t.type==='income'?'paid':'partial'}">${t.type==='income'?'Pemasukan':'Pengeluaran'}</span></td><td class="${t.type==='income'?'positive':'negative'}"><strong>${t.type==='income'?'+':'−'}${money(t.amount)}</strong></td><td><div class="row-actions">${t.type==='expense'?`<button class="icon-btn" data-nota="${t.id}">${t.receipt?'📎 Nota':'＋ Nota'}</button>`:''}<button class="icon-btn" data-edit-transaction="${t.id}">Edit</button><button class="icon-btn" data-delete-transaction="${t.id}">Hapus</button></div></td></tr>`).join(''):'<tr><td colspan="6" class="empty">Belum ada transaksi pada periode ini.</td></tr>'}
+function renderReport(){const m=$('#reportMonth').value||currentMonth,inc=sumTransactions('income',m),out=sumTransactions('expense',m),paid=data.payments.filter(p=>p.month===m).reduce((s,p)=>s+Number(p.amount||0),0),items=data.transactions.filter(t=>t.date?.startsWith(m)).sort((a,b)=>a.date.localeCompare(b.date));$('#reportContent').innerHTML=`<div class="report-box"><div style="text-align:center;padding:8px 0 18px"><div class="eyebrow">LAPORAN RESMI KAS ${esc(S().org||'KELAS').toUpperCase()}</div><h2 style="margin:8px 0;font-size:22px">${esc(monthLabel(m))}</h2><div class="note">Dibuat pada ${new Date().toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</div></div><div class="report-line"><span>Saldo awal periode*</span><strong>${money(balance()-inc+out)}</strong></div><div class="report-line"><span>Total pemasukan</span><strong class="positive">${money(inc)}</strong></div><div class="report-line"><span>Di antaranya pembayaran kas</span><strong>${money(paid)}</strong></div><div class="report-line"><span>Total pengeluaran</span><strong class="negative">${money(out)}</strong></div><div class="report-line"><span>Surplus / defisit periode</span><strong class="${inc-out>=0?'positive':'negative'}">${money(inc-out)}</strong></div><div class="report-line"><span>Saldo akhir seluruh periode</span><strong>${money(balance())}</strong></div><p class="note">*Saldo awal dihitung dari saldo saat ini dikurangi transaksi periode yang dipilih. Pembayaran kas tercatat sebagai pemasukan saat pembayaran dimasukkan.</p></div><div class="panel-head" style="margin-top:24px"><div><h3>Rincian Transaksi Periode</h3><p>${items.length} transaksi tercatat</p></div></div><div class="table-wrap"><table><thead><tr><th>Tanggal</th><th>Keterangan</th><th>Kategori</th><th>Jenis</th><th>Nominal</th></tr></thead><tbody>${items.length?items.map(t=>`<tr><td>${dateStr(t.date)}</td><td>${esc(t.description)}${t.receipt?' 📎':''}</td><td>${esc(t.category||'Umum')}</td><td>${t.type==='income'?'Pemasukan':'Pengeluaran'}</td><td>${t.type==='income'?'+':'−'}${money(t.amount)}</td></tr>`).join(''):'<tr><td colspan="5" class="empty">Belum ada transaksi pada periode ini.</td></tr>'}</tbody></table></div>`}
+function renderAll(){ensureMonths();renderDashboard();renderMembers();renderPayments();renderTransactions();renderReport();renderSettings();renderAnnouncements();renderBrand();renderCalendar();renderPay();portal();renderAccounts()}
+function navigate(name){$$('.section').forEach(s=>s.classList.toggle('active',s.id==='section-'+name));$$('.nav button[data-section]').forEach(b=>b.classList.toggle('active',b.dataset.section===name));const titles={dashboard:'Dashboard',members:'Data Anggota',payments:'Pembayaran Kas',transactions:'Transaksi Kas',reports:'Laporan Keuangan',calendar:'Kalender',announcements:'Pengumuman',verify:'Konfirmasi Bayar',accounts:'Kelola Akun',settings:'Pengaturan Iuran'};$('#pageTitle').textContent=titles[name]||'Dashboard';$('#sidebar').classList.remove('open');if(name==='reports')renderReport();window.scrollTo({top:0,behavior:'smooth'})}
+function field(name,label,type='text',value='',opts={}){let html='';if(type==='select')html=`<select name="${name}" ${opts.required?'required':''}>${opts.options.map(o=>`<option value="${esc(o.value)}" ${String(value)===String(o.value)?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;else if(type==='textarea')html=`<textarea name="${name}" rows="3" ${opts.required?'required':''}>${esc(value)}</textarea>`;else html=`<input name="${name}" type="${type}" value="${esc(value)}" ${opts.required?'required':''} ${opts.min!==undefined?`min="${opts.min}"`:''} ${opts.step?`step="${opts.step}"`:''} placeholder="${esc(opts.placeholder||'')}">`;return `<div class="field ${opts.full?'full':''}"><label>${label}${opts.required?' *':''}</label>${html}</div>`}
+function openModal(title,fields,action,submit='Simpan'){modalAction=action;$('#modalTitle').textContent=title;$('#modalFields').innerHTML=fields;$('#saveModal').textContent=submit;$('#modalBackdrop').classList.add('show')}
+function closeModal(){$('#modalBackdrop').classList.remove('show');modalAction=null}
+function memberForm(m={}){openModal(m.id?'Edit Anggota':'Tambah Anggota',field('name','Nama lengkap','text',m.name||'',{required:true})+field('nim','NIM / ID','text',m.nim||'')+field('contact','Nomor kontak','tel',m.contact||'')+field('fee','Kas wajib per bulan (Rp)','number',m.fee??perMonth(),{required:true,min:0})+field('status','Status anggota','select',m.status||'active',{options:[{value:'active',label:'Aktif'},{value:'inactive',label:'Tidak aktif'}]}),v=>{const obj={...m,...v,fee:Number(v.fee)};if(m.id)data.members=data.members.map(x=>x.id===m.id?obj:x);else data.members.push({...obj,id:uid()});save();closeModal();toast('Data anggota berhasil disimpan.')})}
+function transactionForm(t={}){openModal(t.id?'Edit Transaksi':'Tambah Transaksi',field('type','Jenis transaksi','select',t.type||'income',{required:true,options:[{value:'income',label:'Pemasukan'},{value:'expense',label:'Pengeluaran'}]})+field('date','Tanggal','date',t.date||ymd(now),{required:true})+field('description','Keterangan','text',t.description||'',{required:true,full:true,placeholder:'Contoh: Kas mingguan, dekorasi kelas'})+field('category','Kategori','select',t.category||'Kas kelas',{options:[{value:'Kas kelas',label:'Kas kelas'},{value:'Iuran kegiatan',label:'Iuran kegiatan'},{value:'Perlengkapan',label:'Perlengkapan'},{value:'Konsumsi',label:'Konsumsi'},{value:'Kegiatan kelas',label:'Kegiatan kelas'},{value:'Lainnya',label:'Lainnya'}]})+field('amount','Nominal (Rp)','number',t.amount||(t.id?'':S().fee),{required:true,min:1})+field('note','Catatan tambahan','textarea',t.note||'',{full:true}),v=>{const obj={...t,...v,amount:Number(v.amount)};if(t.id&&t.paymentId){if(obj.type==='income')data.payments=data.payments.map(p=>p.id===t.paymentId?{...p,amount:obj.amount,date:obj.date}:p);else{data.payments=data.payments.filter(p=>p.id!==t.paymentId);delete obj.paymentId}}if(t.id)data.transactions=data.transactions.map(x=>x.id===t.id?obj:x);else data.transactions.push({...obj,id:uid()});save();closeModal();toast('Transaksi berhasil disimpan.')})}
+function paymentForm(memberId='',month=currentMonth){const options=activeMembers().map(m=>({value:m.id,label:m.name}));if(!options.length){toast('Tambahkan anggota terlebih dahulu.');return}const m=data.members.find(x=>x.id===memberId)||data.members[0],due=Number(m?.fee||0),paid=paidFor(m?.id,month);openModal('Catat Pembayaran Kas',field('memberId','Nama anggota','select',m?.id,{required:true,options})+field('month','Bulan pembayaran','select',month,{required:true,options:monthOptions()})+field('amount','Nominal dibayar (Rp)','number',Math.max(0,due-paid),{required:true,min:1})+field('date','Tanggal bayar','date',ymd(now),{required:true})+field('method','Metode pembayaran','select','Tunai',{options:[{value:'Tunai',label:'Tunai'},{value:'Transfer',label:'Transfer'},{value:'E-wallet',label:'E-wallet'},{value:'Lainnya',label:'Lainnya'}]}),v=>{const member=data.members.find(x=>x.id===v.memberId);const p={id:uid(),memberId:v.memberId,month:v.month,amount:Number(v.amount),date:v.date,method:v.method};data.payments.push(p);data.transactions.push({id:uid(),type:'income',date:v.date,description:`Kas ${monthLabel(v.month)} — ${member?.name||'Anggota'}`,category:'Kas kelas',amount:p.amount,note:`Pembayaran via ${v.method}`,paymentId:p.id});save();closeModal();toast('Pembayaran berhasil dicatat.')})}
+function monthOptions(){const months=[];for(let i=-3;i<18;i++){const d=new Date(now.getFullYear(),now.getMonth()-i,1),m=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;months.push({value:m,label:monthLabel(m)})}return months}
+$('#modalForm').addEventListener('submit',e=>{e.preventDefault();if(!modalAction)return;const fd=new FormData(e.currentTarget),v=Object.fromEntries(fd.entries());modalAction(v)});
+$$('.nav button[data-section]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.section)));
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.goto)));
+$('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+$('#todayPill').textContent='📅 '+now.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+$('#quickAdd').onclick=$('#welcomeAdd').onclick=$('#addTransaction').onclick=()=>transactionForm();
+$('#addMember').onclick=()=>memberForm();
+$('#addPayment').onclick=()=>paymentForm('', $('#paymentMonth').value||currentMonth);
+$('#modalClose').onclick=$('#cancelModal').onclick=closeModal;
+$('#modalBackdrop').addEventListener('click',e=>{if(e.target===$('#modalBackdrop'))closeModal()});
+['memberSearch','memberFilter'].forEach(id=>$('#'+id).addEventListener('input',renderMembers));
+['paymentSearch','paymentMonth','paymentStatus'].forEach(id=>$('#'+id).addEventListener('input',renderPayments));
+['transactionSearch','transactionType','transactionMonth'].forEach(id=>$('#'+id).addEventListener('input',renderTransactions));
+$('#reportMonth').addEventListener('change',renderReport);$('#refreshReport').onclick=renderReport;$('#printReport').onclick=()=>{renderReport();window.print()};
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.editMember){const m=data.members.find(x=>x.id===b.dataset.editMember);if(m)memberForm(m)}
+ if(b.dataset.deleteMember){const id=b.dataset.deleteMember;if(confirm('Hapus anggota ini? Riwayat transaksi dan pembayaran yang sudah tercatat tidak otomatis dihapus.')){data.members=data.members.filter(m=>m.id!==id);save();toast('Anggota dihapus.')}}
+ if(b.dataset.pay)paymentForm(b.dataset.pay,b.dataset.month);
+ if(b.dataset.editTransaction){const t=data.transactions.find(x=>x.id===b.dataset.editTransaction);if(t)transactionForm(t)}
+ if(b.dataset.deleteTransaction){const id=b.dataset.deleteTransaction;if(confirm('Hapus transaksi ini?')){const t=data.transactions.find(x=>x.id===id);data.transactions=data.transactions.filter(x=>x.id!==id);if(t?.paymentId)data.payments=data.payments.filter(p=>p.id!==t.paymentId);save();toast('Transaksi dihapus.')}}
+});
+$('#backupBtn').onclick=()=>{const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`backup-kaskelas-${currentMonth}.json`;a.click();URL.revokeObjectURL(url);toast('Cadangan data diunduh.')};
+$('#importBtn').onclick=()=>$('#importFile').click();
+$('#importFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!Array.isArray(d.members)||!Array.isArray(d.transactions)||!Array.isArray(d.payments))throw Error();if(confirm('Impor akan mengganti data yang saat ini tersimpan. Lanjutkan?')){data=norm(d);save();toast('Data berhasil diimpor.')}}catch{alert('File tidak valid. Gunakan file cadangan JSON dari KasKelas.')}e.target.value=''};
+$('#resetBtn').onclick=()=>{if(confirm('Yakin menghapus SEMUA data kas di cloud (anggota, pembayaran, transaksi, pengumuman, agenda)? Pengaturan iuran dan QRIS tetap dipertahankan. Sebaiknya ekspor cadangan terlebih dahulu.')){data=norm({settings:data.settings,pay:data.pay});save();toast('Data berhasil direset.')}};
+
+const S=()=>data.settings;
+function perMonth(f=S().fee,p=S().period){return Number(f)*(p==='weekly'?4:1)}
+function dueDate(month){const [y,m]=month.split('-').map(Number),last=new Date(y,m,0).getDate();return new Date(y,m-1,Math.min(Number(S().due)||28,last),23,59,59)}
+function renderBrand(){const s=S(),org=s.org||'Kelas';$('#brandOrg').textContent=org;document.title='KasKelas — '+org;$('#welcomeHi').textContent=`HALO, ${(s.treasurer||'BENDAHARA').toUpperCase()}! 👋`;$('#welcomeTitle').textContent=`Kas ${org}`;
+ const dd=dueDate(currentMonth),days=Math.ceil((dd-now)/864e5),unpaid=activeMembers().filter(m=>paidFor(m.id,currentMonth)<Number(m.fee||0)).length;
+ $('#welcomeSub').textContent=`Iuran ${money(s.fee)}/${s.period==='weekly'?'minggu':'bulan'} · jatuh tempo tanggal ${s.due} (${dueLabel()})${unpaid?' · '+unpaid+' anggota belum lunas':''}`}
+function updateHint(){$('#setHint').textContent=`Tagihan per anggota: ${money(perMonth(Number($('#setFee').value)||0,$('#setPeriod').value))} / bulan`}
+function renderSettings(){const s=S();$('#setOrg').value=s.org;$('#setTreasurer').value=s.treasurer||'';$('#setFee').value=s.fee;$('#setPeriod').value=s.period;$('#setDue').value=s.due;updateHint()}
+$('#settingsForm').addEventListener('submit',e=>{e.preventDefault();const org=$('#setOrg').value.trim(),fee=Number($('#setFee').value),period=$('#setPeriod').value,due=Math.min(31,Math.max(1,Math.floor(Number($('#setDue').value)||0)));if(!org||!(fee>=0)||!due){toast('Periksa kembali isian pengaturan.');return}
+ data.settings={org,treasurer:$('#setTreasurer').value.trim(),fee,period,due};if($('#setApply').checked)data.members=data.members.map(m=>({...m,fee:perMonth(fee,period)}));save();toast('Pengaturan iuran disimpan.')});
+['setFee','setPeriod'].forEach(id=>$('#'+id).addEventListener('input',updateHint));
+function sortedAnn(){return [...data.announcements].sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0)||(b.date||'').localeCompare(a.date||''))}
+function annCard(a,full){return `<div class="ann-card ${a.pinned?'pinned':''}"><div class="ann-head"><strong>${a.pinned?'📌 ':''}${esc(a.title)}</strong><small>${dateStr(a.date)}</small></div><p>${esc(a.body).replace(/\n/g,'<br>')}</p>${full?`<div class="row-actions"><button class="icon-btn" data-ann-copy="${a.id}">📋 Salin WA</button><button class="icon-btn" data-ann-pin="${a.id}">${a.pinned?'Lepas sematan':'Sematkan'}</button><button class="icon-btn" data-ann-edit="${a.id}">Edit</button><button class="icon-btn" data-ann-del="${a.id}">Hapus</button></div>`:''}</div>`}
+function renderAnnouncements(){const list=sortedAnn();$('#annList').innerHTML=list.length?list.map(a=>annCard(a,true)).join(''):'<div class="empty">Belum ada pengumuman. Buat pengumuman pertama untuk seluruh anggota.</div>';
+ const d=$('#dashAnnouncements');d.style.display=list.length?'block':'none';d.innerHTML=list.length?`<div class="panel-head"><div><h3>Pengumuman</h3><p>Informasi terbaru untuk seluruh anggota</p></div><button class="text-btn" data-go="announcements">Lihat semua →</button></div>`+list.slice(0,3).map(a=>annCard(a,false)).join(''):''}
+function annForm(a={}){openModal(a.id?'Edit Pengumuman':'Buat Pengumuman',field('title','Judul','text',a.title||'',{required:true,full:true,placeholder:'Contoh: Kas bulan ini jatuh tempo'})+field('body','Isi pengumuman','textarea',a.body||'',{required:true,full:true})+field('pinned','Sematkan di atas','select',a.pinned?'1':'0',{full:true,options:[{value:'0',label:'Tidak'},{value:'1',label:'Ya, sematkan'}]}),v=>{const o={...a,title:v.title.trim(),body:v.body.trim(),pinned:v.pinned==='1'};if(a.id)data.announcements=data.announcements.map(x=>x.id===a.id?o:x);else data.announcements.push({...o,id:uid(),date:ymd(now)});save();closeModal();toast('Pengumuman disimpan.')})}
+$('#addAnnouncement').onclick=()=>annForm();
+async function copyText(t){try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement('textarea');a.value=t;document.body.append(a);a.select();document.execCommand('copy');a.remove()}toast('Teks disalin, siap ditempel ke WhatsApp.')}
+function arrears(month){return activeMembers().map(m=>({m,left:Math.max(0,Number(m.fee||0)-paidFor(m.id,month))})).filter(r=>r.left>0)}
+$('#copyArrears').onclick=()=>{const month=$('#paymentMonth').value||currentMonth,rows=arrears(month);if(!rows.length){toast('Semua anggota sudah lunas 🎉');return}copyText(`*Rekap tunggakan kas ${S().org}*\n${monthLabel(month)} · jatuh tempo tanggal ${S().due}\n\n`+rows.map((r,i)=>`${i+1}. ${r.m.name} — ${money(r.left)}`).join('\n')+`\n\nTotal: ${money(rows.reduce((t,r)=>t+r.left,0))}`)};
+function waLink(m,month){let n=String(m.contact||'').replace(/\D/g,'');if(!n)return null;if(n.startsWith('0'))n='62'+n.slice(1);else if(n.startsWith('8'))n='62'+n;const due=Number(m.fee||0),paid=paidFor(m.id,month),left=Math.max(0,due-paid);
+ const msg=`Assalamu'alaikum ${m.name}, pengingat kas ${S().org} bulan ${monthLabel(month)}.\nTagihan: ${money(due)}\nSudah dibayar: ${money(paid)}\nSisa: ${money(left)}\nJatuh tempo tanggal ${S().due}. Mohon segera dilunasi ya. Terima kasih 🙏\n— ${S().treasurer||'Bendahara'}`;return 'https://wa.me/'+n+'?text='+encodeURIComponent(msg)}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.go)navigate(d.go);
+ if(d.calDay){calSel=d.calDay;renderCalendar()}
+ if(d.calAdd)evForm({date:d.calAdd});
+ if(d.calEdit){const x=data.events.find(v=>v.id===d.calEdit);if(x)evForm(x)}
+ if(d.calDel&&confirm('Hapus agenda ini?')){data.events=data.events.filter(v=>v.id!==d.calDel);save();toast('Agenda dihapus.')}
+ if(d.wa){const m=data.members.find(x=>x.id===d.wa),l=m&&waLink(m,d.month);if(l)window.open(l,'_blank','noopener');else toast('Nomor kontak anggota belum diisi.')}
+ if(d.annCopy){const a=data.announcements.find(x=>x.id===d.annCopy);if(a)copyText(`📢 *${a.title}*\n${a.body}\n\n— ${S().treasurer||'Bendahara'} ${S().org}`)}
+ if(d.annPin){data.announcements=data.announcements.map(x=>x.id===d.annPin?{...x,pinned:!x.pinned}:x);save()}
+ if(d.annEdit){const a=data.announcements.find(x=>x.id===d.annEdit);if(a)annForm(a)}
+ if(d.annDel&&confirm('Hapus pengumuman ini?')){data.announcements=data.announcements.filter(x=>x.id!==d.annDel);save();toast('Pengumuman dihapus.')}
+});
+
+const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+let calMonth=currentMonth,calSel=ymd(now);
+const EV_COLOR={'chip-due':'#e0554d','chip-plan':'#4c6fd1','chip-rekap':'#2ca77d','chip-agenda':'#e5a44b'};
+const fmtK=n=>n>=1e6?(n/1e6).toFixed(1).replace('.0','')+'jt':n>=1000?Math.round(n/1000)+'rb':String(n);
+function autoEvents(ym){if(!$('#calAuto').checked)return[];const[y,m]=ym.split('-').map(Number),last=new Date(y,m,0).getDate(),dd=Math.min(Number(S().due)||28,last),mk=(day,title,cls,note,short)=>({date:`${ym}-${String(day).padStart(2,'0')}`,title,cls,note,short,auto:true});
+ const o=[mk(dd,'Jatuh tempo kas','chip-due',`Tagihan ${money(perMonth())} per anggota · ${S().org}`,'Tempo kas')];if(dd>3)o.push(mk(dd-3,'Kirim pengingat WA','chip-plan','Ingatkan anggota yang belum lunas lewat menu Pembayaran Kas','Pengingat'));o.push(mk(last,'Rekap & laporan bulan ini','chip-rekap','Cek tunggakan, cetak laporan, umumkan saldo kas','Rekap'));return o}
+function eventsOn(date){return[...autoEvents(date.slice(0,7)).filter(e=>e.date===date),...data.events.filter(e=>e.date===date).map(e=>({...e,cls:'chip-agenda'}))]}
+function renderCalendar(){const[y,m]=calMonth.split('-').map(Number),first=new Date(y,m-1,1),off=(first.getDay()+6)%7,days=new Date(y,m,0).getDate(),today=ymd(now);
+ $('#calTitle').textContent=first.toLocaleDateString('id-ID',{month:'long',year:'numeric'});
+ let h=['Sen','Sel','Rab','Kam','Jum','Sab','Min'].map(d=>`<div class="cal-dow">${d}</div>`).join('')+'<div></div>'.repeat(off);
+ for(let i=1;i<=days;i++){const date=`${calMonth}-${String(i).padStart(2,'0')}`,evs=eventsOn(date),tx=data.transactions.filter(t=>t.date===date),inc=tx.filter(t=>t.type==='income').reduce((a,t)=>a+Number(t.amount||0),0),exp=tx.filter(t=>t.type==='expense').reduce((a,t)=>a+Number(t.amount||0),0);
+  const chips=evs.slice(0,2).map(e=>`<span class="cal-chip ${e.cls}">${esc(e.short||e.title)}</span>`).join('')+(evs.length>2?`<span class="cal-chip chip-money">+${evs.length-2} lagi</span>`:'')+(inc?`<span class="cal-chip chip-money">↗ ${fmtK(inc)}</span>`:'')+(exp?`<span class="cal-chip chip-money">↘ ${fmtK(exp)}</span>`:'');
+  h+=`<button class="cal-cell${date===today?' today':''}${date===calSel?' sel':''}" data-cal-day="${date}"><span class="cal-num">${i}</span><span class="cal-chips">${chips}</span></button>`}
+ $('#calGrid').innerHTML=h;
+ const evs=eventsOn(calSel),tx=data.transactions.filter(t=>t.date===calSel);
+ $('#calDetail').innerHTML=`<div class="panel-head"><div><h3>${dateStr(calSel)}</h3><p>${evs.length+tx.length?evs.length+' agenda · '+tx.length+' transaksi':'Belum ada agenda di tanggal ini'}</p></div><button class="primary" data-cal-add="${calSel}">＋ Agenda</button></div>`+
+  evs.map(e=>`<div class="ev-row"><span class="ev-dot" style="background:${EV_COLOR[e.cls]}"></span><div class="ev-info"><strong>${esc(e.title)}</strong><small>${esc(e.note||'')}${e.auto?' · rencana otomatis':''}</small></div>${e.auto?'':`<div class="row-actions"><button class="icon-btn" data-cal-edit="${e.id}">Edit</button><button class="icon-btn" data-cal-del="${e.id}">Hapus</button></div>`}</div>`).join('')+
+  tx.map(t=>`<div class="ev-row"><span class="ev-dot" style="background:${t.type==='income'?'#2ca77d':'#e5a44b'}"></span><div class="ev-info"><strong>${esc(t.description||t.category||'Transaksi')}</strong><small>${t.type==='income'?'Pemasukan':'Pengeluaran'} · ${money(t.amount)}</small></div></div>`).join('');
+ const end=new Date(now.getFullYear(),now.getMonth(),now.getDate()+30),ms=new Set();for(let d=new Date(now.getFullYear(),now.getMonth(),1);d<=end;d=new Date(d.getFullYear(),d.getMonth()+1,1))ms.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);
+ const t0=ymd(now),t1=ymd(end),up=[...[...ms].flatMap(autoEvents),...data.events.map(e=>({...e,cls:'chip-agenda'}))].filter(e=>e.date>=t0&&e.date<=t1).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,10);
+ $('#calUpcoming').innerHTML=up.length?up.map(e=>`<div class="ev-row"><span class="ev-dot" style="background:${EV_COLOR[e.cls]}"></span><div class="ev-info"><strong>${esc(e.title)}</strong><small>${dateStr(e.date)}</small></div></div>`).join(''):'<div class="empty">Tidak ada agenda dalam 30 hari ke depan.</div>'}
+function evForm(e={}){openModal(e.id?'Edit Agenda':'Tambah Agenda',field('title','Judul agenda','text',e.title||'',{required:true,full:true,placeholder:'Contoh: Rapat kelas'})+field('date','Tanggal','date',e.date||calSel,{required:true,full:true})+field('note','Catatan','textarea',e.note||'',{full:true}),v=>{const o={...e,title:v.title.trim(),date:v.date,note:v.note.trim()};if(e.id)data.events=data.events.map(x=>x.id===e.id?o:x);else data.events.push({...o,id:uid()});calSel=v.date;calMonth=v.date.slice(0,7);save();closeModal();toast('Agenda disimpan.')})}
+$('#calPrev').onclick=()=>{const[y,m]=calMonth.split('-').map(Number),d=new Date(y,m-2,1);calMonth=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;renderCalendar()};
+$('#calNext').onclick=()=>{const[y,m]=calMonth.split('-').map(Number),d=new Date(y,m,1);calMonth=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;renderCalendar()};
+$('#calToday').onclick=()=>{calMonth=currentMonth;calSel=ymd(now);renderCalendar()};
+$('#calAuto').addEventListener('change',renderCalendar);
+function refreshToday(){const n=new Date();if(ymd(n)===ymd(now))return;const old=currentMonth;now=n;currentMonth=`${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}`;['paymentMonth','transactionMonth','reportMonth'].forEach(id=>{const el=$('#'+id);if(el&&el.value===old)el.value=currentMonth});if(calMonth===old)calMonth=currentMonth;calSel=ymd(now);$('#todayPill').textContent='📅 '+now.toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});renderAll()}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshToday()});window.addEventListener('focus',refreshToday);
+
+function dayDiff(){const dd=dueDate(currentMonth),a=new Date(dd.getFullYear(),dd.getMonth(),dd.getDate()),b=new Date(now.getFullYear(),now.getMonth(),now.getDate());return Math.round((a-b)/864e5)}
+function dueLabel(){const n=dayDiff();return n>0?n+' hari lagi':n===0?'hari ini':'telat '+(-n)+' hari'}
+function remActive(){const dash=$('#section-dashboard');return dayDiff()<=7&&localStorage.getItem('kaskelas_rem_off')!==ymd(now)&&dash.classList.contains('active')}
+let remTimer,remPage=0;
+const wait=(fn,ms)=>{remTimer=setTimeout(fn,ms)};
+function remCycle(){clearTimeout(remTimer);const el=$('#reminderFloat'),rows=arrears(currentMonth);
+ if(!remActive()||!rows.length){el.hidden=true;el.className='rem-float';return wait(remCycle,2500)}
+ const per=4,pages=Math.ceil(rows.length/per),pg=remPage%pages,total=rows.reduce((t,r)=>t+r.left,0),dd=dueDate(currentMonth);
+ el.innerHTML=`<div class="rem-head"><span class="rem-bell">⏰</span><div><strong>Pengingat Kas ${esc(S().org)}</strong><small>Jatuh tempo ${dateStr(ymd(dd))} · ${dueLabel()}</small></div><button class="rem-x" data-rem-close title="Tutup untuk hari ini">×</button></div><div class="rem-sum">${rows.length} anggota belum lunas · total tagihan ${money(total)}</div><ul>${rows.slice(pg*per,pg*per+per).map(r=>`<li><span>${esc(r.m.name)}</span><b>${money(r.left)}</b></li>`).join('')}</ul><div class="rem-foot"><span>${pages>1?`Daftar ${pg+1}/${pages}`:''}</span><button data-go="payments">Buka Pembayaran →</button></div>`;
+ el.hidden=false;el.className='rem-float in';
+ wait(()=>{el.className='rem-float float';wait(()=>{el.className='rem-float out';wait(()=>{el.hidden=true;remPage++;wait(remCycle,3500)},950)},7500)},950)}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if('remClose'in b.dataset){localStorage.setItem('kaskelas_rem_off',ymd(now));clearTimeout(remTimer);const el=$('#reminderFloat');el.className='rem-float out';wait(()=>{el.hidden=true;remCycle()},950)}if(b.dataset.go||b.dataset.section){setTimeout(()=>{const el=$('#reminderFloat');if(!remActive()){clearTimeout(remTimer);el.hidden=true;el.className='rem-float';remCycle()}else if(el.hidden){remCycle()}},50)}});
+
+/* ===== Pembayaran online: QRIS + rekening, bukti, konfirmasi ===== */
+function shrink(f,max,q){return new Promise((ok,no)=>{const r=new FileReader();r.onerror=no;r.onload=()=>{const i=new Image();i.onerror=no;i.onload=()=>{const k=Math.min(1,max/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*k);c.height=Math.round(i.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(i,0,0,c.width,c.height);ok(c.toDataURL('image/jpeg',q))};i.src=r.result};r.readAsDataURL(f)})}
+function payLink(){return location.href.split('#')[0].split('?')[0]+'#bayar'}
+function addPaid(p){const m=data.members.find(x=>x.id===p.memberId),pay={id:uid(),memberId:p.memberId,month:p.month,amount:p.amount,date:p.date,method:p.method};data.payments.push(pay);data.transactions.push({id:uid(),type:'income',date:p.date,description:`Kas ${monthLabel(p.month)} — ${m?.name||'Anggota'}`,category:'Kas kelas',amount:p.amount,note:`Pembayaran via ${p.method} (bukti diunggah)`,paymentId:pay.id})}
+function renderPay(){const P=data.pay,fee=perMonth(S().fee,S().period),meths=[...(P.qris?['QRIS']:[]),...P.accounts.map(a=>a.bank)];
+ $('#vBadge').textContent=data.pending.length;$('#vBadge').style.display=data.pending.length?'inline-block':'none';
+ $('#pendBody').innerHTML=data.pending.length?data.pending.map(p=>{const m=data.members.find(x=>x.id===p.memberId);return `<tr><td><strong>${esc(m?.name||'—')}</strong></td><td>${esc(monthLabel(p.month))}</td><td>${money(p.amount)}</td><td>${esc(p.method)}</td><td>${dateStr(p.date)}</td><td><img class="pp-thumb" data-proof="${p.id}" src="${p.proof}" alt="Bukti"></td><td><div class="row-actions"><button class="icon-btn" data-ok="${p.id}">✓ Terima</button><button class="icon-btn" data-no="${p.id}">✕ Tolak</button></div></td></tr>`}).join(''):'<tr><td colspan="7" class="empty">Belum ada pembayaran yang menunggu konfirmasi.</td></tr>';
+ $('#setQrisPrev').innerHTML=P.qris?`<img class="pp-qris" src="${P.qris}" alt="QRIS" style="margin-left:0">`:'';$('#setAcc').value=P.accounts.map(a=>[a.bank,a.no,a.name].join('|')).join('\n');$('#setLink').value=payLink();
+ }
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ok],[data-no],[data-proof],[data-copy],[data-copy-link]');if(!b)return;const D=b.dataset,p=data.pending.find(x=>x.id===(D.ok||D.no||D.proof));
+ if(D.copy)copyText(D.copy);else if('copyLink'in D)copyText(payLink());
+ else if(D.ok&&p){addPaid(p);data.pending=data.pending.filter(x=>x!==p);save();toast('Pembayaran diterima dan dicatat.');waOpen(p,true)}
+ else if(D.no&&p){const why=prompt('Alasan penolakan (dikirim ke anggota lewat WA):','Nominal tidak sesuai');if(why===null)return;data.pending=data.pending.filter(x=>x!==p);save();toast('Pembayaran ditolak.');waOpen(p,false,why.trim())}
+ else if(D.proof&&p)openModal('Bukti pembayaran',`<div class="field full"><img style="max-width:100%;border-radius:10px" src="${p.proof}" alt="Bukti"></div>`,closeModal,'Tutup')});
+$('#payCfg').addEventListener('submit',async e=>{e.preventDefault();try{const f=$('#setQris').files[0];if(f)data.pay.qris=await shrink(f,800,.92);data.pay.accounts=$('#setAcc').value.split('\n').map(l=>l.split('|').map(x=>x.trim())).filter(a=>a[0]&&a[1]).map(a=>({bank:a[0],no:a[1],name:a[2]||''}));save();toast('Pengaturan pembayaran disimpan.')}catch{alert('Gagal menyimpan. Pastikan file QRIS berupa gambar.')}});
+
+/* ===== WA saat terima/tolak, kwitansi, nota pengeluaran ===== */
+function waNum(c=''){let n=String(c).replace(/\D/g,'');if(n.startsWith('0'))n='62'+n.slice(1);return n.length>=9?n:''}
+function waOpen(p,ok,why=''){const m=data.members.find(x=>x.id===p.memberId),n=waNum(m?.contact);if(!n){toast('Tercatat. Nomor WA anggota belum diisi, jadi pesan tidak dibuat.');return}
+ const head=`Assalamu'alaikum ${m.name}, pembayaran kas ${S().org} bulan ${monthLabel(p.month)} sebesar ${money(p.amount)} via ${p.method}`,tail=`\n— ${S().treasurer||'Bendahara'}`;
+ const msg=ok?`${head} sudah kami terima. Terima kasih 🙏${tail}`:`${head} belum bisa kami terima.${why?`\nAlasan: ${why}`:''}\nMohon kirim ulang buktinya lewat link ini: ${payLink()}${tail}`;
+ window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg),'_blank')}
+function makeReceipt(mid,month){const m=data.members.find(x=>x.id===mid);if(!m)return;const ps=data.payments.filter(p=>p.memberId===mid&&p.month===month),paid=ps.reduce((a,p)=>a+Number(p.amount||0),0),due=Number(m.fee||0),last=ps[ps.length-1]||{},W=640,H=450,c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d'),F='system-ui,-apple-system,"Segoe UI",sans-serif';
+ x.fillStyle='#fff';x.fillRect(0,0,W,H);x.fillStyle='#13795b';x.fillRect(0,0,W,86);x.fillStyle='#fff';x.font='700 26px '+F;x.fillText('Kwitansi Kas',32,44);x.font='15px '+F;x.fillText(S().org,32,68);
+ x.textAlign='right';x.fillText('KW-'+month.replace('-','')+'-'+m.id.toUpperCase(),W-32,44);x.fillText(dateStr(ymd(new Date())),W-32,68);x.textAlign='left';
+ [['Diterima dari',m.name],['Untuk',`Kas ${monthLabel(month)}`],['Metode',[...new Set(ps.map(p=>p.method))].join(', ')||'—'],['Tanggal bayar',dateStr(last.date)],['Tagihan',money(due)],['Status',paid>=due&&due>0?'LUNAS':`SEBAGIAN (sisa ${money(due-paid)})`]].forEach((r,i)=>{const y=134+i*38;x.fillStyle='#73827e';x.font='14px '+F;x.fillText(r[0],32,y);x.fillStyle='#172b27';x.font='600 17px '+F;x.fillText(r[1],200,y)});
+ x.fillStyle='#e7f5ef';x.fillRect(32,350,W-64,56);x.fillStyle='#0d6047';x.font='14px '+F;x.fillText('Jumlah dibayar',50,384);x.font='700 26px '+F;x.textAlign='right';x.fillText(money(paid),W-50,388);x.textAlign='left';
+ x.fillStyle='#73827e';x.font='13px '+F;x.fillText('Bendahara: '+(S().treasurer||'—'),32,432);
+ c.toBlob(b=>{const url=URL.createObjectURL(b);openModal('Kwitansi '+m.name,`<div class="field full"><img src="${url}" style="max-width:100%;border:1px solid var(--line);border-radius:10px" alt="Kwitansi"></div>`,()=>{const a=document.createElement('a');a.href=url;a.download=`kwitansi-${m.name.replace(/\W+/g,'-')}-${month}.png`;a.click();closeModal()},'Unduh gambar')})}
+function notaModal(id){const t=data.transactions.find(x=>x.id===id);if(!t)return;
+ if(t.receipt){openModal('Nota: '+t.description,`<div class="field full"><img src="${t.receipt}" style="max-width:100%;border-radius:10px" alt="Nota"></div>`,()=>{if(confirm('Hapus nota ini?')){delete t.receipt;save();closeModal();toast('Nota dihapus.')}},'Hapus nota');return}
+ openModal('Unggah nota',`<div class="field full"><label>Foto nota atau struk *</label><input name="nota" type="file" accept="image/*" required></div>`,async v=>{try{t.receipt=await shrink(v.nota,900,.7);save();closeModal();toast('Nota tersimpan.')}catch{delete t.receipt;alert('Gagal menyimpan nota. Pastikan file berupa gambar dan penyimpanan browser belum penuh.')}},'Simpan nota')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-rc],[data-nota]');if(!b)return;if(b.dataset.rc)makeReceipt(b.dataset.rc,b.dataset.month);else notaModal(b.dataset.nota)});
+
+/* ======================================================================
+   SUPABASE: koneksi, login admin & anggota, dan sinkronisasi data
+   ====================================================================== */
+const SUPABASE_URL = 'https://ncgaewlnszdlsinnsqgg.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_AV0RhWt7KM1KnxDuucbYrw_PjQnYdJN';
+const MEMBER_KEY = 'kaskelas_member';
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+let admin = null;            // {id, email} setelah admin masuk
+let memberInfo = null;       // hasil RPC member_login setelah anggota masuk
+let memberCred = null;       // {nim, pin} untuk memanggil RPC berikutnya
+let memberBanner = '';
+let pinSet = new Set();      // id anggota yang sudah punya PIN
+let adminList = [];
+let cloudRows = 0;
+let bootError = '';
+let snap = new Map();        // salinan terakhir yang sudah tersimpan di cloud
+let syncing = false, dirty = false;
+let syncTimer = null, retryTimer = null, pollTimer = null;
+let tab = /bayar/i.test(location.hash) ? 'm' : 'a';
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/* ---------- Sinkronisasi data (admin) ---------- */
+
+// JSON dengan urutan kunci tetap, supaya perbandingan antar versi akurat.
+const canon = v => JSON.stringify(v, (k, x) =>
+  x && typeof x === 'object' && !Array.isArray(x)
+    ? Object.fromEntries(Object.keys(x).sort().map(key => [key, x[key]]))
+    : x);
+
+function stripMember(m) {
+  const { pinHash, pinSalt, ...rest } = m;   // sisa format lama, tidak boleh ikut ke cloud
+  return rest;
+}
+
+function collect(src = data) {
+  const out = new Map();
+  for (const c of COLLS)
+    for (const it of src[c]) out.set(`${c}/${it.id}`, canon(c === 'members' ? stripMember(it) : it));
+  out.set('settings/main', canon({ ...src.settings, pay: { qris: src.pay.qris, accounts: src.pay.accounts } }));
+  return out;
+}
+
+function fromRows(rows) {
+  const d = { settings: {}, pay: {} };
+  for (const c of COLLS) d[c] = [];
+  for (const r of rows) {
+    if (r.coll === 'settings') {
+      const { pay, ...st } = r.data || {};
+      d.settings = st;
+      d.pay = pay || {};
+    } else if (d[r.coll]) {
+      d[r.coll].push({ ...r.data, id: r.id });
+    }
+  }
+  return norm(d);
+}
+
+const splitKey = k => { const i = k.indexOf('/'); return [k.slice(0, i), k.slice(i + 1)]; };
+
+function setSync(state) {
+  const el = $('#syncPill');
+  if (!el) return;
+  el.className = 'pill ' + state;
+  el.textContent = state === 'ok' ? '☁ Tersimpan' : state === 'pending' ? '☁ Menyimpan…' : '⚠ Belum tersimpan · ketuk untuk coba lagi';
+}
+
+function save() {
+  renderAll();
+  queueSync();
+}
+
+function queueSync() {
+  if (!admin) return;
+  dirty = true;
+  setSync('pending');
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(flush, 400);
+}
+
+async function flush() {
+  if (!admin || syncing) return;
+  clearTimeout(retryTimer);
+  syncing = true;
+  try {
+    while (dirty) {
+      dirty = false;
+      const cur = collect(), up = [], del = {};
+      for (const [k, v] of cur) if (snap.get(k) !== v) up.push(k);
+      for (const k of snap.keys()) {
+        if (!cur.has(k)) { const [c, id] = splitKey(k); (del[c] = del[c] || []).push(id); }
+      }
+      for (let i = 0; i < up.length; i += 50) {
+        const rows = up.slice(i, i + 50).map(k => {
+          const [coll, id] = splitKey(k);
+          return { coll, id, data: JSON.parse(cur.get(k)) };
+        });
+        const { error } = await sb.from('kas_records').upsert(rows, { onConflict: 'coll,id' });
+        if (error) throw error;
+      }
+      for (const [c, ids] of Object.entries(del)) {
+        const { error } = await sb.from('kas_records').delete().eq('coll', c).in('id', ids);
+        if (error) throw error;
+      }
+      snap = cur;
+    }
+    setSync('ok');
+  } catch (e) {
+    console.error('Sinkronisasi gagal', e);
+    dirty = true;
+    setSync('err');
+    retryTimer = setTimeout(flush, 10000);
+  } finally {
+    syncing = false;
+  }
+}
+
+async function ensureSynced() {
+  clearTimeout(syncTimer);
+  for (let i = 0; i < 100 && (syncing || dirty); i++) {
+    if (syncing) await sleep(100);
+    else { await flush(); if (dirty) break; }
+  }
+  if (dirty) throw new Error('Data belum tersinkron ke cloud. Coba lagi sebentar lagi.');
+}
+
+async function fetchAll() {
+  const rows = [];
+  for (let from = 0; ; from += 500) {
+    const { data: part, error } = await sb.from('kas_records').select('coll,id,data').order('seq').range(from, from + 499);
+    if (error) throw error;
+    rows.push(...part);
+    if (part.length < 500) break;
+  }
+  const { data: pins, error: e2 } = await sb.from('member_pins').select('member_id');
+  if (e2) throw e2;
+  return { rows, pins: pins.map(p => p.member_id) };
+}
+
+async function loadCloud() {
+  const { rows, pins } = await fetchAll();
+  cloudRows = rows.length;
+  data = fromRows(rows);
+  pinSet = new Set(pins);
+  snap = collect();
+  try { localStorage.setItem('kaskelas_org', data.settings.org); } catch {}
+  setSync('ok');
+  if (!rows.some(r => r.coll === 'settings')) { snap.delete('settings/main'); queueSync(); }
+}
+
+async function refresh() {
+  if (!admin || syncing || dirty || $('#modalBackdrop').classList.contains('show')) return;
+  try {
+    const { rows, pins } = await fetchAll();
+    if (syncing || dirty) return;            // ada perubahan lokal selama mengambil data
+    const nd = fromRows(rows), ns = collect(nd);
+    const same = ns.size === snap.size && [...ns].every(([k, v]) => snap.get(k) === v) && pins.length === pinSet.size;
+    if (same) return;
+    data = nd; snap = ns; pinSet = new Set(pins);
+    renderAll();
+  } catch (e) { console.warn('Refresh gagal', e); }
+}
+
+function startPolling() {
+  clearInterval(pollTimer);
+  pollTimer = setInterval(refresh, 30000);
+}
+
+/* ---------- Pindahan data lama (localStorage) ke cloud ---------- */
+
+function legacyData() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE) || 'null');
+    if (!d) return null;
+    return ['members', 'transactions', 'payments', 'announcements', 'events'].some(k => Array.isArray(d[k]) && d[k].length) ? d : null;
+  } catch { return null; }
+}
+
+function offerMigration() {
+  const L = legacyData();
+  if (!L || cloudRows > 0 || localStorage.getItem(STORE + '_cloud')) return;
+  const msg = `Ditemukan data lama di browser ini (${(L.members || []).length} anggota, ${(L.transactions || []).length} transaksi). Unggah ke cloud sekarang?`;
+  if (!confirm(msg)) return;
+  const d = norm(L);
+  d.members = d.members.map(stripMember);
+  data = d;
+  localStorage.setItem(STORE + '_cloud', '1');
+  save();
+  toast('Data lama diunggah ke cloud.');
+}
+
+/* ---------- Login ---------- */
+
+function explain(e) {
+  const m = String((e && e.message) || e || '');
+  if (/kas_records|member_pins|schema cache|does not exist|PGRST20|42P01|is_admin|list_admins|member_login/i.test(m))
+    return 'Database belum disiapkan. Jalankan supabase_setup.sql di SQL Editor Supabase.';
+  if (/fetch|network|failed to load/i.test(m)) return 'Tidak bisa terhubung ke server. Periksa koneksi internet Anda.';
+  return m || 'Terjadi kesalahan.';
+}
+
+async function checkAdmin() {
+  const { data: ok, error } = await sb.rpc('is_admin');
+  if (error) throw error;
+  return ok === true;
+}
+
+async function enterAdmin(user) {
+  admin = { id: user.id, email: user.email };
+  try {
+    await loadCloud();
+  } catch (e) {
+    admin = null;
+    throw e;
+  }
+  offerMigration();
+  startPolling();
+  loadAdmins();
+}
+
+async function adminLogin(email, pw) {
+  const { data: r, error } = await sb.auth.signInWithPassword({ email, password: pw });
+  if (error) return 'Email atau password salah.';
+  try {
+    if (!(await checkAdmin())) {
+      await sb.auth.signOut();
+      return 'Akun ini belum terdaftar sebagai admin. Jalankan bootstrap_admin di Supabase.';
+    }
+    await enterAdmin(r.user);
+  } catch (e) {
+    await sb.auth.signOut().catch(() => {});
+    return explain(e);
+  }
+  mode();
+  renderAll();
+  navigate('dashboard');
+  remCycle();
+  return '';
+}
+
+const monthKey = i => {
+  const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+};
+
+async function memberLogin(nim, pin) {
+  const { data: r, error } = await sb.rpc('member_login', { p_nim: nim, p_pin: pin, p_months: [0, 1, 2, 3, 4, 5].map(monthKey) });
+  if (error) throw error;
+  if (r && r.error) return r.error;
+  memberInfo = r;
+  memberCred = { nim, pin };
+  try {
+    localStorage.setItem(MEMBER_KEY, JSON.stringify({ nim, pin, exp: Date.now() + 30 * 864e5 }));
+    localStorage.setItem('kaskelas_org', (r.settings && r.settings.org) || '');
+  } catch {}
+  return '';
+}
+
+const MEMBER_ERR = {
+  LOCKED: 'Terlalu banyak percobaan salah. Coba lagi 10 menit lagi.',
+  INVALID: 'NIM atau PIN salah.',
+  NO_PIN: 'PIN belum dibuat. Minta ke bendahara.'
+};
+const SUBMIT_ERR = {
+  BAD_INPUT: 'Data tidak valid. Periksa nominal dan bukti pembayaran.',
+  TOO_MANY: 'Masih ada banyak kiriman yang menunggu konfirmasi. Tunggu bendahara memprosesnya.',
+  INVALID: 'Sesi tidak valid. Silakan keluar lalu masuk lagi.',
+  LOCKED: 'Terlalu banyak percobaan. Coba lagi nanti.',
+  NO_PIN: 'PIN belum aktif.'
+};
+
+async function restoreMember() {
+  try {
+    const c = JSON.parse(localStorage.getItem(MEMBER_KEY) || 'null');
+    if (c && c.exp > Date.now()) {
+      if (await memberLogin(c.nim, c.pin)) localStorage.removeItem(MEMBER_KEY);
+    } else {
+      localStorage.removeItem(MEMBER_KEY);
+    }
+  } catch {}
+}
+
+function sess() {
+  if (admin) return { role: 'admin', id: admin.id };
+  if (memberInfo) return { role: 'member', id: memberInfo.member.id };
+  return null;
+}
+
+function mode() {
+  const x = sess(), b = document.body;
+  b.classList.remove('loading');
+  b.classList.toggle('guest', !x);
+  b.classList.toggle('member', !!x && x.role === 'member');
+  $('#whoami').textContent = admin ? 'Masuk: ' + admin.email : '';
+  renderAuth();
+  portal();
+}
+
+async function logout() {
+  if (admin) {
+    try { await ensureSynced(); }
+    catch { if (!confirm('Ada perubahan yang belum tersimpan ke cloud. Tetap keluar?')) return; }
+    clearTimeout(syncTimer); clearTimeout(retryTimer); clearInterval(pollTimer);
+    await sb.auth.signOut().catch(() => {});
+    admin = null; data = norm({}); snap = new Map(); pinSet = new Set(); adminList = []; dirty = false;
+  }
+  memberInfo = null; memberCred = null; memberBanner = '';
+  localStorage.removeItem(MEMBER_KEY);
+  mode();
+  renderAll();
+}
+
+function renderAuth() {
+  const L = $('#loginPage');
+  if (sess()) { L.innerHTML = ''; return; }
+  const org = localStorage.getItem('kaskelas_org') || S().org;
+  const memberForm = `<form id="memForm">${field('nim', 'NIM', 'text', '', { required: true })}${field('pin', 'PIN', 'password', '', { required: true })}<p class="note">PIN diberikan oleh bendahara.</p><div class="lg-err" id="authErr"></div><button class="primary" type="submit">Masuk</button></form>`;
+  const adminForm = `<form id="admForm">${field('email', 'Email admin', 'email', '', { required: true })}${field('pw', 'Password', 'password', '', { required: true })}<div class="lg-err" id="authErr"></div><button class="primary" type="submit">Masuk</button></form>`;
+  L.innerHTML = `<div class="lg"><h2>KasKelas</h2><p class="note">${esc(org)}</p>
+    <div class="tabs"><button type="button" class="secondary ${tab === 'm' ? 'on' : ''}" data-tab="m">Anggota</button><button type="button" class="secondary ${tab === 'a' ? 'on' : ''}" data-tab="a">Admin</button></div>
+    ${tab === 'm' ? memberForm : adminForm}</div>`;
+  if (bootError) { $('#authErr').textContent = bootError; }
+}
+
+document.addEventListener('submit', async e => {
+  const id = e.target.id;
+  if (id !== 'admForm' && id !== 'memForm') return;
+  e.preventDefault();
+  const v = Object.fromEntries(new FormData(e.target));
+  const err = m => { const el = $('#authErr'); if (el) el.textContent = m; };
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true; err(''); bootError = '';
+  try {
+    if (id === 'admForm') {
+      const m = await adminLogin(v.email.trim(), v.pw);
+      if (m) err(m);
+    } else {
+      const code = await memberLogin(v.nim.trim(), v.pin.trim());
+      if (code) err(MEMBER_ERR[code] || 'Login gagal.');
+      else { mode(); renderAll(); }
+    }
+  } catch (x) {
+    err(explain(x));
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+/* ---------- Halaman anggota (bayar kas) ---------- */
+
+function portal() {
+  const P = $('#payPage');
+  if (!memberInfo) { P.innerHTML = ''; return; }
+  const { member: m, pay = {}, months } = memberInfo;
+  const org = (memberInfo.settings && memberInfo.settings.org) || S().org;
+  const accounts = Array.isArray(pay.accounts) ? pay.accounts : [];
+  const methods = [...(pay.qris ? ['QRIS'] : []), ...accounts.map(a => a.bank)];
+  const due = Number(m.fee || 0);
+  const stat = x => x.paid >= due && due > 0 ? ['paid', 'LUNAS'] : x.paid > 0 ? ['partial', 'SEBAGIAN'] : x.pending ? ['partial', 'MENUNGGU KONFIRMASI'] : ['unpaid', 'BELUM'];
+  const rows = months.map(x => { const s = stat(x); return `<div class="acc"><div><strong>${esc(monthLabel(x.month))}</strong><small>${money(x.paid)} dari ${money(due)}</small></div><span class="status ${s[0]}">${s[1]}</span></div>`; }).join('');
+  const first = months[0] || { month: currentMonth, paid: 0 };
+  const amount = Math.max(0, due - first.paid) || due;
+  const qris = pay.qris ? `<img class="pp-qris" src="${esc(pay.qris)}" alt="QRIS ${esc(org)}"><p class="note" style="text-align:center">Scan dengan aplikasi bank atau e-wallet apa saja</p>` : '';
+  const accs = accounts.map(a => `<div class="acc"><div><strong>${esc(a.bank)}</strong> ${esc(a.no)}<small>a.n. ${esc(a.name)}</small></div><button type="button" class="icon-btn" data-copy="${esc(a.no)}">Salin</button></div>`).join('');
+  P.innerHTML = `${memberBanner}
+<div class="pp-card"><div class="eyebrow">${esc(org)}</div><h3 style="font-size:20px;margin:6px 0">Halo, ${esc(m.name)}</h3><p class="note">Kas ${money(due)} per bulan. Kiriman bukti yang belum dikonfirmasi tampil sebagai "menunggu konfirmasi".</p><button class="secondary" id="logoutBtn2">Keluar</button></div>
+<div class="pp-card"><h3>Status kas 6 bulan terakhir</h3>${rows}</div>
+<div class="pp-card"><h3>Cara bayar</h3>${qris}${accs}${methods.length ? '' : '<p class="note">Bendahara belum mengisi cara pembayaran.</p>'}</div>
+<form class="pp-card" id="payForm"><h3>Konfirmasi pembayaran</h3><div class="form-grid">
+${field('month', 'Bulan', 'select', first.month, { required: true, options: months.map(x => ({ value: x.month, label: monthLabel(x.month) })) })}
+${field('amount', 'Nominal (Rp)', 'number', amount, { required: true, min: 1 })}
+${field('method', 'Bayar via', 'select', '', { required: true, full: true, options: methods.map(x => ({ value: x, label: x })) })}
+<div class="field full"><label>Bukti pembayaran (foto atau screenshot) *</label><input name="proof" type="file" accept="image/*" required></div>
+</div><div class="modal-actions" style="justify-content:flex-start"><button type="submit" class="primary" ${methods.length ? '' : 'disabled'}>Kirim bukti bayar</button></div></form>`;
+  memberBanner = '';
+}
+
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'payForm' || !memberInfo) return;
+  e.preventDefault();
+  const f = new FormData(e.target), btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true;
+  try {
+    const proof = await shrink(f.get('proof'), 900, .7);
+    const { data: r, error } = await sb.rpc('member_submit', {
+      p_nim: memberCred.nim, p_pin: memberCred.pin,
+      p_month: f.get('month'), p_amount: Number(f.get('amount')),
+      p_method: f.get('method'), p_date: ymd(new Date()), p_proof: proof
+    });
+    if (error) throw error;
+    if (r && r.error) { alert(SUBMIT_ERR[r.error] || 'Gagal mengirim bukti.'); btn.disabled = false; return; }
+    await memberLogin(memberCred.nim, memberCred.pin);
+    memberBanner = '<div class="pp-card" style="background:var(--mint)"><strong>✓ Bukti terkirim.</strong><p class="note">Pembayaranmu menunggu konfirmasi bendahara.</p></div>';
+    portal();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch {
+    alert('Gagal mengirim. Pastikan file berupa gambar dan koneksi internet stabil.');
+    btn.disabled = false;
+  }
+});
+
+document.addEventListener('change', e => {
+  if (!memberInfo || e.target.name !== 'month' || !e.target.closest('#payForm')) return;
+  const x = memberInfo.months.find(v => v.month === e.target.value), due = Number(memberInfo.member.fee || 0);
+  e.target.closest('form').amount.value = Math.max(0, due - (x ? x.paid : 0)) || due;
+});
+
+/* ---------- Kelola akun (admin & PIN anggota) ---------- */
+
+async function loadAdmins() {
+  if (!admin) return;
+  const { data: r, error } = await sb.rpc('list_admins');
+  adminList = error ? [] : r;
+  renderAccounts();
+}
+
+function renderAccounts() {
+  $('#admBody').innerHTML = adminList.length ? adminList.map(a => {
+    const me = admin && a.user_id === admin.id;
+    return `<tr><td><strong>${esc(a.email)}</strong>${me ? ' (Anda)' : ''}</td><td><div class="row-actions">${me ? '<button class="icon-btn" data-apw="1">Ganti password</button>' : `<button class="icon-btn" data-adel="${esc(a.email)}">Cabut akses</button>`}</div></td></tr>`;
+  }).join('') : '<tr><td colspan="2" class="empty">Belum ada data admin.</td></tr>';
+  $('#pinBody').innerHTML = activeMembers().map(m => {
+    const has = pinSet.has(m.id);
+    return `<tr><td><strong>${esc(m.name)}</strong></td><td>${esc(m.nim || '—')}</td><td><span class="status ${has ? 'paid' : 'unpaid'}">${has ? 'SUDAH ADA' : 'BELUM ADA'}</span></td><td><button class="icon-btn" data-pin="${m.id}" ${m.nim ? '' : 'disabled'}>${has ? 'Reset PIN' : 'Buat PIN'}</button></td></tr>`;
+  }).join('') || '<tr><td colspan="4" class="empty">Belum ada anggota.</td></tr>';
+}
+
+async function setPin(m) {
+  const pin = String(100000 + crypto.getRandomValues(new Uint32Array(1))[0] % 900000);
+  const { error } = await sb.rpc('admin_set_pin', { p_member_id: m.id, p_pin: pin });
+  if (error) throw error;
+  pinSet.add(m.id);
+  return pin;
+}
+
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-tab],[data-apw],[data-adel],[data-pin],#addAdmin,#pinAll,#logoutBtn,#logoutBtn2,#syncPill');
+  if (!b) return;
+  const D = b.dataset;
+  try {
+    if (D.tab) { tab = D.tab; renderAuth(); }
+    else if (b.id === 'syncPill') { if (dirty) flush(); }
+    else if (b.id === 'logoutBtn' || b.id === 'logoutBtn2') await logout();
+    else if (b.id === 'addAdmin') {
+      openModal('Tambah admin',
+        field('email', 'Email akun Supabase', 'email', '', { required: true, full: true }) +
+        '<div class="field full"><p class="note">Akun harus dibuat dulu di Supabase: Authentication → Users → Add user.</p></div>',
+        async v => {
+          const { error } = await sb.rpc('add_admin', { p_email: v.email.trim() });
+          if (error) {
+            alert(/USER_NOT_FOUND/.test(error.message) ? 'Email belum terdaftar di Supabase. Buat dulu akunnya di Authentication → Users → Add user, lalu coba lagi.' : explain(error));
+            return;
+          }
+          closeModal(); toast('Admin ditambahkan.'); loadAdmins();
+        });
+    }
+    else if (D.apw) {
+      openModal('Ganti password', field('pw', 'Password baru (min. 8 karakter)', 'password', '', { required: true, full: true }), async v => {
+        if (v.pw.length < 8) { alert('Password minimal 8 karakter.'); return; }
+        const { error } = await sb.auth.updateUser({ password: v.pw });
+        if (error) { alert(explain(error)); return; }
+        closeModal(); toast('Password diganti.');
+      });
+    }
+    else if (D.adel) {
+      if (!confirm('Cabut akses admin untuk ' + D.adel + '?')) return;
+      const { error } = await sb.rpc('remove_admin', { p_email: D.adel });
+      if (error) { alert(explain(error)); return; }
+      toast('Akses admin dicabut.'); loadAdmins();
+    }
+    else if (D.pin) {
+      await ensureSynced();
+      const m = data.members.find(x => x.id === D.pin), pin = await setPin(m), n = waNum(m.contact);
+      renderAccounts();
+      openModal('PIN untuk ' + m.name,
+        `<div class="field full"><p>NIM ${esc(m.nim)}<br>PIN <strong style="font-size:26px;letter-spacing:4px">${pin}</strong></p><p class="note">PIN hanya tampil sekarang. Kirim ke anggota.</p></div>`,
+        () => {
+          if (n) window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(`Assalamu'alaikum ${m.name}, akun KasKelas ${S().org}\nNIM: ${m.nim}\nPIN: ${pin}\nJangan dibagikan ke orang lain.`), '_blank');
+          else copyText(pin);
+          closeModal();
+        }, n ? 'Kirim lewat WA' : 'Salin PIN');
+    }
+    else if (b.id === 'pinAll') {
+      const ms = activeMembers().filter(m => m.nim && !pinSet.has(m.id));
+      if (!ms.length) { toast('Semua anggota sudah punya PIN.'); return; }
+      await ensureSynced();
+      const L = [];
+      for (const m of ms) L.push(`${m.name} | ${m.nim} | ${await setPin(m)}`);
+      renderAccounts();
+      openModal('Daftar PIN baru',
+        `<div class="field full"><textarea rows="10" readonly>${esc(L.join('\n'))}</textarea><p class="note">PIN hanya tampil sekarang. Salin dan kirim ke tiap anggota.</p></div>`,
+        () => { copyText(L.join('\n')); closeModal(); }, 'Salin daftar');
+    }
+  } catch (err) {
+    alert(explain(err));
+  }
+});
+
+/* ---------- Mulai aplikasi ---------- */
+
+function fatal(msg) {
+  document.body.classList.remove('loading');
+  document.body.classList.add('guest');
+  $('#loginPage').innerHTML = `<div class="lg"><h2>KasKelas</h2><div class="lg-err">${esc(msg)}</div><button class="primary" onclick="location.reload()">Muat ulang</button></div>`;
+}
+
+async function boot() {
+  window.addEventListener('hashchange', () => { if (/bayar/i.test(location.hash)) tab = 'm'; renderAuth(); });
+  window.addEventListener('beforeunload', e => { if (dirty || syncing) { e.preventDefault(); e.returnValue = ''; } });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+  if (!sb) { fatal('Pustaka Supabase gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.'); return; }
+  sb.auth.onAuthStateChange(ev => { if (ev === 'SIGNED_OUT' && admin) { admin = null; mode(); } });
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      if (await checkAdmin()) await enterAdmin(session.user);
+      else await sb.auth.signOut();
+    }
+    if (!admin) await restoreMember();
+  } catch (e) {
+    console.error(e);
+    bootError = explain(e);
+  }
+  mode();
+  renderAll();
+  remCycle();
+}
+
+/* ===== Impor anggota dari CSV ===== */
+function parseCSV(t){t=t.replace(/^\uFEFF/,'');const first=t.split(/\r?\n/)[0]||'',d=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':',',rows=[];let r=[],c='',q=false;for(let i=0;i<t.length;i++){const ch=t[i];if(q){if(ch==='"'&&t[i+1]==='"'){c+='"';i++}else if(ch==='"')q=false;else c+=ch}else if(ch==='"')q=true;else if(ch===d){r.push(c);c=''}else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&t[i+1]==='\n')i++;r.push(c);c='';if(r.some(x=>x.trim()))rows.push(r);r=[]}else c+=ch}r.push(c);if(r.some(x=>x.trim()))rows.push(r);return rows}
+$('#csvTpl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFFnama,nim,kontak,kas\nContoh Nama,2501031001,081234567890,5000\n'],{type:'text/csv'}));a.download='template-anggota.csv';a.click()};
+$('#csvBtn').onclick=()=>$('#csvFile').click();
+$('#csvFile').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;try{const rows=parseCSV(await file.text()),h=rows.shift().map(x=>x.trim().toLowerCase()),ix=(...k)=>h.findIndex(x=>k.includes(x)),iN=ix('nama','name'),iM=ix('nim','id'),iC=ix('kontak','contact','hp','wa','telepon'),iF=ix('kas','fee','iuran');if(iN<0)throw Error('Kolom "nama" tidak ditemukan. Pakai Template CSV.');
+ const add=[];let dup=0,bad=0;for(const r of rows){const name=(r[iN]||'').trim(),nim=iM>=0?(r[iM]||'').trim():'',contact=iC>=0?(r[iC]||'').trim():'';if(!name||/e\+/i.test(nim)){bad++;continue}const key=x=>String(x||'').trim().toLowerCase();if([...data.members,...add].some(x=>(nim&&key(x.nim)===key(nim))||key(x.name)===key(name))){dup++;continue}const fee=Number(iF>=0?r[iF]:'');add.push({id:uid(),name,nim,contact,fee:fee>=0&&iF>=0&&r[iF]!==''?fee:perMonth(S().fee,S().period),status:'active'})}
+ if(!add.length){alert(`Tidak ada anggota baru. Dilewati: ${dup} sudah ada, ${bad} baris tidak valid (nama kosong atau NIM rusak format Excel).`);return}
+ if(confirm(`Impor ${add.length} anggota baru?\n${dup} dilewati (sudah ada), ${bad} baris tidak valid.`)){data.members.push(...add);save();toast(`${add.length} anggota berhasil diimpor.`)}}catch(err){alert(err.message||'File CSV tidak bisa dibaca.')}};
+boot();
+})();
+</script>
+</body>
+</html>
