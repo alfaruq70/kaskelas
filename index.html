@@ -558,7 +558,15 @@ async function enterAdmin(user) {
 
 async function adminLogin(email, pw) {
   const { data: r, error } = await sb.auth.signInWithPassword({ email, password: pw });
-  if (error) return 'Email atau password salah.';
+  if (error) {
+    const em = String(error.message || '');
+    console.error('Login admin gagal:', error);
+    if (/not confirmed/i.test(em)) return 'Email belum dikonfirmasi. Di Supabase: Authentication > Users > klik akun > Confirm user.';
+    if (/invalid login/i.test(em)) return 'Email atau password salah, atau akun belum dibuat di project Supabase ini (Authentication > Users).';
+    if (/api key|apikey|jwt/i.test(em)) return 'API key Supabase tidak valid. Periksa SUPABASE_URL dan SUPABASE_KEY di index.html.';
+    if (/fetch|network|failed/i.test(em)) return 'Tidak bisa terhubung ke Supabase. Periksa URL project dan koneksi internet.';
+    return 'Login gagal: ' + em;
+  }
   try {
     if (!(await checkAdmin())) {
       await sb.auth.signOut();
@@ -670,7 +678,7 @@ document.addEventListener('submit', async e => {
   btn.disabled = true; err(''); bootError = '';
   try {
     if (id === 'admForm') {
-      const m = await adminLogin(v.email.trim(), v.pw);
+      const m = await adminLogin(v.email.trim().toLowerCase(), v.pw);
       if (m) err(m);
     } else {
       const code = await memberLogin(v.nim.trim(), v.pin.trim());
